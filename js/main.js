@@ -103,7 +103,7 @@ function realizarPedido() {
         total += costoParcial;
         continuar = continuarOTerminar(total);
     } while (continuar == "1");
-    console.log("TOTA A PAGAR: " + total);
+    console.log("TOTAL A PAGAR: " + total);
 };
 
 realizarPedido();
