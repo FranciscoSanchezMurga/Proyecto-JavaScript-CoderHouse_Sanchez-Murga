@@ -1,3 +1,21 @@
+let productos = [
+    p1 = {
+        id: 1,
+        nombre : "Sándwich de milanesa",
+        precio: 500,
+    },
+    p2 = {
+        id: 2,
+        nombre : "Sándwich de lomito",
+        precio: 600,
+    },
+    p3 = {
+        id: 3,
+        nombre : "Pizza especial",
+        precio: 1000,
+    },
+];
+
 const PRECIO1 = 450;
 const PRECIO2 = 550;
 const PRECIO3 = 1000;
