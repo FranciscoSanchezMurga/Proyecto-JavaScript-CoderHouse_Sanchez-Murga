@@ -51,12 +51,12 @@ function calcularCostoParcial() {
 function continuarOTerminar() {
     calcularCostoParcial();
     continuar = prompt(
-    `Hasta ahora suma un total parcial de $${costoParcial}.
+        `Hasta ahora suma un total parcial de $${costoParcial}.
 En la consola puede ver el resumen de su orden.
 Si desea continuar añadiendo productos presione 1, en caso contrario 2.`);
     while ((continuar != "1") && (continuar != "2")) {
         continuar = prompt(
-    `Se equivocó de comando.
+            `Se equivocó de comando.
 Recuerde que el costo de su orden hasta ahora asciende a $${costoParcial}.
 En la consola puede ver el resumen de su orden.
 Si desea continuar añadiendo productos presione 1, en caso contrario 2.`);
@@ -72,8 +72,8 @@ function ConstructorOrdenes(producto, cantidadSeleccionada) {
     this.costo = producto.precio * parseInt(cantidadSeleccionada);
 };
 
-function guardarOrdenes(productoSeleccionado, cantidadSeleccionada) {  
-    for (let producto of productos) {    
+function guardarOrdenes(productoSeleccionado, cantidadSeleccionada) {
+    for (let producto of productos) {
         if (producto.id == productoSeleccionado) {
             let ordenNueva = new ConstructorOrdenes(producto, cantidadSeleccionada);
             return ordenNueva;
@@ -83,7 +83,7 @@ function guardarOrdenes(productoSeleccionado, cantidadSeleccionada) {
 
 function plasmarOperacionParcialEnConsola() {
     console.log(
-`-----------------------
+        `-----------------------
 ORDENES HASTA EL MOMENTO
 ${escribirOrdenes()}
 ------------------------
@@ -110,7 +110,7 @@ function seleccionarCantidad() {
     return cantidadSeleccionada;
 };
 
-function listarProductos() {
+function listarProductos(productos) {
     let listaProductos = "";
     for (let i = 0; i < productos.length; i += 1) {
         if (i == productos.length) {
@@ -135,19 +135,32 @@ function seleccionarProducto() {
     let productoSeleccionado = prompt(
         `SELECCIONE UN PRODUCTO
 Tipee el número que le corresponda al item según esta lista:
-${listarProductos()}`
+${listarProductos(productos)}`
     );
     while (!(validarProductoSeleccionado(productoSeleccionado))) {
         productoSeleccionado = prompt(
             `SELECCIONE UN PRODUCTO VÁLIDO!! Se equivocó de comando.
 Tipee el número que le corresponda al item según esta lista:
-${listarProductos()}`
+${listarProductos(productos)}`
         );
     };
     return productoSeleccionado;
 };
 
+function filtrarPorPrecio() {
+    precioMaximo = prompt("Introduzca el máximo precio que está dispuesto a pagar por producto:");
+    let productosFiltrados = productos.filter(producto => producto.precio <= precioMaximo);
+    if (productosFiltrados.length != 0) {
+        alert(`Los siguientes productos cumplen la restricción impuesta:
+${listarProductos(productosFiltrados)}
+Tenga esto en cuenta en los próximos pasos.`);
+    } else {
+        alert("No hay ningun producto que satisfaga sus necesidades. Tengalo en cuenta al realizar su compra.")
+    };
+};
+
 function realizarPedido() {
+    filtrarPorPrecio();
     do {
         productoSeleccionado = seleccionarProducto();
         cantidadSeleccionada = seleccionarCantidad();
