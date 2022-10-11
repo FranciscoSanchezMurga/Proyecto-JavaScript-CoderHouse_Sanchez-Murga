@@ -20,8 +20,11 @@ const PRECIO1 = 450;
 const PRECIO2 = 550;
 const PRECIO3 = 1000;
 let total = 0;
+let productoSeleccionado;
+let cantidadSeleccionada;
+let ordenes = [];
+let costoParcial;
 let continuar;
-let orden = [];
 
 function continuarOTerminar(total) {
     continuar = prompt("Hasta ahora debería pagar $" + total + "\nSi desea continuar añadiendo productos presione 1, en caso contrario 2.");
@@ -39,13 +42,12 @@ function ConstructorOrdenes(producto, cantidadSeleccionada) {
 };
 
 function guardarOrdenes(productoSeleccionado, cantidadSeleccionada) {  
-    for (let producto of productos) {
+    for (let producto of productos) {    
         if (producto.id == productoSeleccionado) {
-            let orden = new ConstructorOrdenes(producto, cantidadSeleccionada);
-            ordenParcial.push(orden);
+            let ordenNueva = new ConstructorOrdenes(producto, cantidadSeleccionada);
+            return ordenNueva;
         };
     };
-    return ordenParcial;
 };
 
 function calcularCostoParcial(productoSeleccionado, cantidadSeleccionada) {
@@ -121,12 +123,12 @@ ${listarProductos()}`
 
 function realizarPedido() {
     do {
-        let productoSeleccionado = seleccionarProducto();
-        let cantidadSeleccionada = seleccionarCantidad();
-        orden = guardarOrdenes(productoSeleccionado, cantidadSeleccionada);
-        let costoParcial = calcularCostoParcial(productoSeleccionado, cantidadSeleccionada);
-        plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccionada, costoParcial);
-        total += costoParcial;
+        productoSeleccionado = seleccionarProducto();
+        cantidadSeleccionada = seleccionarCantidad();
+        ordenes.push(guardarOrdenes(productoSeleccionado, cantidadSeleccionada));
+        // costoParcial = calcularCostoParcial(productoSeleccionado, cantidadSeleccionada);
+        // plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccionada, costoParcial);
+        // total += costoParcial;
         continuar = continuarOTerminar(total);
     } while (continuar == "1");
     console.log("TOTAL A PAGAR: " + total);
