@@ -67,12 +67,21 @@ function listarProductos() {
     let listaProductos = "";
     for (let i = 0; i < productos.length; i += 1) {
         if (i == productos.length) {
-            listaProductos += `${productos[i].id}) ${productos[i].nombre} - $${productos[i].precio}.`
+            listaProductos += `${productos[i].id} // ${productos[i].nombre} - $${productos[i].precio}.`
         } else {
-            listaProductos += `${productos[i].id}) ${productos[i].nombre} - $${productos[i].precio}.\n`;
+            listaProductos += `${productos[i].id} // ${productos[i].nombre} - $${productos[i].precio}.\n`;
         }
     };
     return listaProductos;
+};
+
+function validarProductoSeleccionado(productoSeleccionado) {
+    for (let producto of productos) {
+        if (producto.id == productoSeleccionado ) {
+            return true;
+        };
+    };
+    return false;
 };
 
 function seleccionarProducto() {
@@ -81,7 +90,7 @@ function seleccionarProducto() {
 Tipee el número que le corresponda al item según esta lista:
 ${listarProductos()}`
     );
-    while ((productoSeleccionado != "1") && (productoSeleccionado != "2") && (productoSeleccionado != "3")) {
+    while (!(validarProductoSeleccionado(productoSeleccionado))) {
         productoSeleccionado = prompt(
             `SELECCIONE UN PRODUCTO VÁLIDO!! Se equivocó de comando.
 Tipee el número que le corresponda al item según esta lista:
