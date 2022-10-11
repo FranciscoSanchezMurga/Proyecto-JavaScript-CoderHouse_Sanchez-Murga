@@ -21,6 +21,7 @@ const PRECIO2 = 550;
 const PRECIO3 = 1000;
 let total = 0;
 let continuar;
+let orden = [];
 
 function continuarOTerminar(total) {
     continuar = prompt("Hasta ahora debería pagar $" + total + "\nSi desea continuar añadiendo productos presione 1, en caso contrario 2.");
@@ -28,6 +29,23 @@ function continuarOTerminar(total) {
         continuar = prompt("Se equivocó de comando.\nSi desea continuar añadiendo productos presione 1, en caso contrario 2.");
     };
     return continuar;
+};
+
+function ConstructorOrdenes(producto, cantidadSeleccionada) {
+    this.idTipoDeProducto = producto.id;
+    this.precioUnitario = producto.precio;
+    this.unidades = parseInt(cantidadSeleccionada);
+    this.costo = producto.precio * parseInt(cantidadSeleccionada);
+};
+
+function guardarOrdenes(productoSeleccionado, cantidadSeleccionada) {  
+    for (let producto of productos) {
+        if (producto.id == productoSeleccionado) {
+            let orden = new ConstructorOrdenes(producto, cantidadSeleccionada);
+            ordenParcial.push(orden);
+        };
+    };
+    return ordenParcial;
 };
 
 function calcularCostoParcial(productoSeleccionado, cantidadSeleccionada) {
@@ -46,6 +64,7 @@ function plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccio
 };
 
 function validarCantidad(cantidadSeleccionada) {
+    let validezCantidad;
     if (isNaN(Number(cantidadSeleccionada)) || (cantidadSeleccionada % 1 != 0)) {
         return validezCantidad = false;
     } else {
@@ -77,7 +96,7 @@ function listarProductos() {
 
 function validarProductoSeleccionado(productoSeleccionado) {
     for (let producto of productos) {
-        if (producto.id == productoSeleccionado ) {
+        if (producto.id == productoSeleccionado) {
             return true;
         };
     };
@@ -104,6 +123,7 @@ function realizarPedido() {
     do {
         let productoSeleccionado = seleccionarProducto();
         let cantidadSeleccionada = seleccionarCantidad();
+        orden = guardarOrdenes(productoSeleccionado, cantidadSeleccionada);
         let costoParcial = calcularCostoParcial(productoSeleccionado, cantidadSeleccionada);
         plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccionada, costoParcial);
         total += costoParcial;
