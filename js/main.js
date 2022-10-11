@@ -46,19 +46,31 @@ function plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccio
 };
 
 function validarCantidad(cantidadSeleccionada) {
+
     let validezCantidad;
+    // if (isNaN(cantidadSeleccionada)){
+    //     return;
+    // } else {
+    //     if (numero % 1 == 0) {
+    //         alert ("Es un numero entero");
+    //     } else {
+    //         alert ("Es un numero decimal");
+    //     }
+    // }
+
     if (isNaN(Number(cantidadSeleccionada)) || (cantidadSeleccionada % 1 != 0)) {
-        validezCantidad = false;
+        return validezCantidad = false;
     } else {
-        validezCantidad = true;
+        return validezCantidad = true;
     };
-    return parseInt(validezCantidad);
+    // return parseInt(validezCantidad);
+
 };
 
 function seleccionarCantidad() {
     let cantidadSeleccionada = prompt("¿Cuantas unidades desea? Solo se aceptan número enteros:");
     let validezCantidad = validarCantidad(cantidadSeleccionada);
-    while (validezCantidad == false) {
+    while (validezCantidad === false) {
         cantidadSeleccionada = prompt("No introdujo un número entero. Vuela a introducir cuantas unidades desea:");
         validezCantidad = validarCantidad(cantidadSeleccionada);
     };
