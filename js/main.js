@@ -23,19 +23,50 @@ let total = 0;
 let productoSeleccionado;
 let cantidadSeleccionada;
 let ordenes = [];
+let ordenNueva = {};
 let costoParcial;
 let continuar;
 
-function continuarOTerminar(total) {
-    continuar = prompt("Hasta ahora debería pagar $" + total + "\nSi desea continuar añadiendo productos presione 1, en caso contrario 2.");
+function escribirOrdenes() {
+    let i = 1;
+    let ordenesEnProsa;
+    for (const orden of ordenes) {
+        let ordenEnProsa = `
+${i}) 
+    Producto: ${orden.nombreProducto}
+    Unidades: ${orden.unidades}
+    Costo Unitario: $${orden.precioUnitario}
+    COSTO ORDEN ${i}: ${orden.costo}
+    `;
+        ordenesEnProsa += ordenEnProsa;
+        i += 1;
+    };
+    return ordenesEnProsa;
+};
+
+function calcularCostoParcial() {
+    return costoParcial = ordenes.reduce((costoAcumulado, orden) => costoAcumulado + orden.costo, 0);
+};
+
+function continuarOTerminar() {
+    calcularCostoParcial();
+    continuar = prompt(
+    `Hasta ahora suma un total parcial de $${costoParcial}.
+En la consola puede ver el resumen de su orden.
+Si desea continuar añadiendo productos presione 1, en caso contrario 2.`);
     while ((continuar != "1") && (continuar != "2")) {
-        continuar = prompt("Se equivocó de comando.\nSi desea continuar añadiendo productos presione 1, en caso contrario 2.");
+        continuar = prompt(
+    `Se equivocó de comando.
+Recuerde que el costo de su orden hasta ahora asciende a $${costoParcial}.
+En la consola puede ver el resumen de su orden.
+Si desea continuar añadiendo productos presione 1, en caso contrario 2.`);
     };
     return continuar;
 };
 
 function ConstructorOrdenes(producto, cantidadSeleccionada) {
     this.idTipoDeProducto = producto.id;
+    this.nombreProducto = producto.nombre;
     this.precioUnitario = producto.precio;
     this.unidades = parseInt(cantidadSeleccionada);
     this.costo = producto.precio * parseInt(cantidadSeleccionada);
@@ -50,19 +81,14 @@ function guardarOrdenes(productoSeleccionado, cantidadSeleccionada) {
     };
 };
 
-function calcularCostoParcial(productoSeleccionado, cantidadSeleccionada) {
-    switch (productoSeleccionado) {
-        case "1":
-            return PRECIO1 * cantidadSeleccionada;
-        case "2":
-            return PRECIO2 * cantidadSeleccionada;
-        case "2":
-            return PRECIO3 * cantidadSeleccionada;
-    }
-};
-
-function plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccionada, costoParcial) {
-    console.log("Producto " + productoSeleccionado + " x " + cantidadSeleccionada + " = " + costoParcial);
+function plasmarOperacionParcialEnConsola() {
+    console.log(
+`-----------------------
+ORDENES HASTA EL MOMENTO
+${escribirOrdenes()}
+------------------------
+A PAGAR: $${calcularCostoParcial()}
+------------------------`);
 };
 
 function validarCantidad(cantidadSeleccionada) {
@@ -125,13 +151,12 @@ function realizarPedido() {
     do {
         productoSeleccionado = seleccionarProducto();
         cantidadSeleccionada = seleccionarCantidad();
-        ordenes.push(guardarOrdenes(productoSeleccionado, cantidadSeleccionada));
-        // costoParcial = calcularCostoParcial(productoSeleccionado, cantidadSeleccionada);
-        // plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccionada, costoParcial);
-        // total += costoParcial;
-        continuar = continuarOTerminar(total);
+        ordenNueva = guardarOrdenes(productoSeleccionado, cantidadSeleccionada);
+        ordenes.push(ordenNueva);
+        plasmarOperacionParcialEnConsola();
+        continuar = continuarOTerminar();
     } while (continuar == "1");
-    console.log("TOTAL A PAGAR: " + total);
+    console.log("TOTAL FINAL: $" + calcularCostoParcial());
 };
 
 realizarPedido();
