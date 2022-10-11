@@ -46,25 +46,11 @@ function plasmarOperacionParcialEnConsola(productoSeleccionado, cantidadSeleccio
 };
 
 function validarCantidad(cantidadSeleccionada) {
-
-    let validezCantidad;
-    // if (isNaN(cantidadSeleccionada)){
-    //     return;
-    // } else {
-    //     if (numero % 1 == 0) {
-    //         alert ("Es un numero entero");
-    //     } else {
-    //         alert ("Es un numero decimal");
-    //     }
-    // }
-
     if (isNaN(Number(cantidadSeleccionada)) || (cantidadSeleccionada % 1 != 0)) {
         return validezCantidad = false;
     } else {
         return validezCantidad = true;
     };
-    // return parseInt(validezCantidad);
-
 };
 
 function seleccionarCantidad() {
@@ -81,11 +67,10 @@ function listarProductos() {
     let listaProductos = "";
     for (let i = 0; i < productos.length; i += 1) {
         if (i == productos.length) {
-            listaProductos += `${i + 1}) ${productos[i].nombre} - $${productos[i].precio}.`
+            listaProductos += `${productos[i].id}) ${productos[i].nombre} - $${productos[i].precio}.`
         } else {
-            listaProductos += `${i + 1}) ${productos[i].nombre} - $${productos[i].precio}.\n`;
+            listaProductos += `${productos[i].id}) ${productos[i].nombre} - $${productos[i].precio}.\n`;
         }
-
     };
     return listaProductos;
 };
