@@ -155,7 +155,7 @@ function filtrarPorPrecio() {
 ${listarProductos(productosFiltrados)}
 Tenga esto en cuenta en los próximos pasos.`);
     } else {
-        alert("No hay ningun producto que satisfaga sus necesidades. Tengalo en cuenta al realizar su compra.")
+        alert("No hay ningun producto que satisfaga sus necesidades. Tengalo en cuenta al realizar su compra en los próximos pasos.")
     };
 };
 
