@@ -30,19 +30,20 @@
                 <input id="inputCantidadSeleccionada" type="number" class="form-control" min="0">
                 <span class="input-group-text">Total parcial</span>
                 <input id="resultadoTotalParcial" type="text" readonly>
-                <button type="submit" class="btn btn-outline-dark" type="button">SUMAR AL CARRITO</button>
+                <button id="btnSumarAlCarrito" type="submit" class="btn btn-outline-dark" type="button">SUMAR AL CARRITO</button>
             </div>
         </form>
 
         <!-- CARRITO -->
 
-        <ul class="list-group">
+        <ul id="listaOrdenes" class="list-group">
             <!-- Headers de la lista de items -->
             <li class="list-group-item bg-dark bg-opacity-10 fw-bold">
                 <div class="row text-center d-flex justify-content-between align-items-center">
+                    <div class="col-1">N° de orden</div>
                     <div class="col-2">Producto</div>
                     <div class="col-2">Unidades</div>
-                    <div class="col-2 fw-light"></div>
+                    <div class="col-1 fw-light"></div>
                     <div class="col-2">Precio unitario</div>
                     <div class="col-1 fw-light"></div>
                     <div class="col-2">Total parcial</div>
@@ -52,11 +53,12 @@
             <!-- Items de la lista -->
             <li class="list-group-item">
                 <div class="row text-center d-flex justify-content-between align-items-center">
+                    <div class="col-1">33</div>
                     <div class="col-2">Sándwich de milanesa</div>
                     <div class="col-2">
                         <div class="w-auto badge bg-primary rounded-pill">2</div>
                     </div>
-                    <div class="col-2 fw-light">x</div>
+                    <div class="col-1 fw-light">x</div>
                     <div class="col-2">$500</div>
                     <div class="col-1 fw-light">=</div>
                     <div class="col-2">

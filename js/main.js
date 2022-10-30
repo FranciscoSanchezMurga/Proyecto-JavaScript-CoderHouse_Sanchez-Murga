@@ -39,6 +39,8 @@ function dibujarCardsDeProductos() {
 const dropdownList = document.getElementById('dropdownList');
 const inputCantidadSeleccionada = document.getElementById('inputCantidadSeleccionada');
 const resultadoTotalParcial = document.getElementById('resultadoTotalParcial');
+const btnSumarAlCarrito = document.getElementById('btnSumarAlCarrito');
+let numeroOrden = 0;
 
 function crearDropdownListProductos() {
     for (const producto of productos) {
@@ -46,18 +48,94 @@ function crearDropdownListProductos() {
     };
 };
 
+function validarProductoYCantidadIngresada() {
+    let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
+    let idProductoSeleccionado = dropdownList.value;
+    let valorNoValido = false;
+    // Operador OR para identificar valores falsy y setear a true "valorNoValido" para evitar un NaN en el DOM
+    cantidadSeleccionada || (valorNoValido = true);
+    idProductoSeleccionado || (valorNoValido = true);
+    return valorNoValido;
+
+};
+
 function calcularTotalParcial() {
     let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
-    let idProductSeleccionado = dropdownList.value;
-    let valorNoValido = false;
-    cantidadSeleccionada || (valorNoValido = true);
-    idProductSeleccionado || (valorNoValido = true);
+    let idProductoSeleccionado = dropdownList.value;
+    let valorNoValido = validarProductoYCantidadIngresada();
     if (valorNoValido === false) {
         for (const producto of productos) {
-            (producto.id === parseInt(idProductSeleccionado)) && (resultadoTotalParcial.value = producto.precio * cantidadSeleccionada);
-    };
-    } else {resultadoTotalParcial.value = ""};
+            (producto.id === parseInt(idProductoSeleccionado)) && (resultadoTotalParcial.value = producto.precio * cantidadSeleccionada);
+        };
+    } else { resultadoTotalParcial.value = "" };
 };
+
+function ConstructorOrdenes() {
+    numeroOrden += 1;
+    const idProductoSeleccionado = dropdownList.value;
+    const cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
+    this.numeroOrden = numeroOrden;
+    this.idProductoSeleccionado = idProductoSeleccionado;
+    this.cantidadSeleccionada = cantidadSeleccionada;
+    for (const producto of productos) {
+        if (producto.id === idProductoSeleccionado) {
+            const nombre = producto.nombre;
+            this.nombre = nombre;
+            const precioUnitario = producto.precioUnitario;
+            this.precioUnitario = precioUnitario;
+            const totalParcial = resultadoTotalParcial.value;
+            this.totalParcial = totalParcial;
+        };
+        this.datosTemporales = [getSeconds(), getMinutes(), getHours(), getDate(), getMonth(), getFullYear(),];
+    };
+};
+
+function guardarOrdenEnLocalStorage() {
+    const ordenNueva = new ConstructorOrdenes();
+    const jsonOrdenNueva = JSON.stringify(ordenNueva);
+    localStorage.setItem(ordenNueva.numeroOrden, jsonOrdenNueva);
+};
+
+function sumarOrdenAlCarrito() {
+    const ordenNueva = new ConstructorOrdenes();
+    const listaOrdenes = document.getElementById('listaOrdenes');
+    listaOrdenes.innerHTML += `
+    <li class="list-group-item">
+        <div class="row text-center d-flex justify-content-between align-items-center">
+            <div class="col-1">${ordenNueva.numeroOrden}</div>
+            <div class="col-2">${ordenNueva.nombre}</div>
+            <div class="col-2">
+                <div class="w-auto badge bg-primary rounded-pill">${ordenNueva.cantidadSeleccionada}</div>
+            </div>
+            <div class="col-1 fw-light">x</div>
+            <div class="col-2">$ ${ordenNueva.precioUnitario}</div>
+            <div class="col-1 fw-light">=</div>
+            <div class="col-2">
+                <div class="w-auto badge bg-primary rounded-pill">$ ${ordenNueva.totalParcial}</div>
+            </div>
+            <div class="col-1 btn btn-outline-danger w-auto">X</div>
+        </div>
+    </li>
+    `;
+};
+
+function resetearInputsProductoYCantidad() {
+    dropdownList.reset();
+    inputCantidadSeleccionada.reset();
+};
+
+btnSumarAlCarrito.addEventListener('click', function (evt) {
+    // evt.preventDefault();
+    guardarOrdenEnLocalStorage();
+    sumarOrdenAlCarrito();
+    resetearInputsProductoYCantidad();
+});
+
+// btnSumarAlCarrito.addEventListener('click', function () {
+//     guardarOrdenEnLocalStorage();
+//     sumarOrdenAlCarrito();
+//     resetearInputsProductoYCantidad();
+// });
 
 
 dropdownList.addEventListener('change', calcularTotalParcial);
