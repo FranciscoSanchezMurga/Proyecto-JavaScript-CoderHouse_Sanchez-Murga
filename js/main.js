@@ -124,8 +124,8 @@ function resetearInputsProductoYCantidad() {
     inputCantidadSeleccionada.reset();
 };
 
-btnSumarAlCarrito.addEventListener('click', function (evt) {
-    // evt.preventDefault();
+btnSumarAlCarrito.addEventListener('click', function () {
+	evt.preventDefault();
     guardarOrdenEnLocalStorage();
     sumarOrdenAlCarrito();
     resetearInputsProductoYCantidad();
