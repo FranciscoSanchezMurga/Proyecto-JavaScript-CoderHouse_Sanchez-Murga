@@ -9,19 +9,19 @@ let productos = [
         id: 2,
         nombre: "Sándwich de lomito",
         precio: 600,
-        imagen: "https://lh3.googleusercontent.com/hAClHNkCCYYkElrvYuWFo2A8nSpgC49jesphUrELgan92tjqb5EKyO_iX0-hiBqEDfA3l4LHqCsK4Ukk_Rb6llFibrkELTaiVYMGiGQuE39-PpZ-Ve1yH1kewEYHwy-iwFLL_jq-Wg=w2400" 
+        imagen: "https://lh3.googleusercontent.com/hAClHNkCCYYkElrvYuWFo2A8nSpgC49jesphUrELgan92tjqb5EKyO_iX0-hiBqEDfA3l4LHqCsK4Ukk_Rb6llFibrkELTaiVYMGiGQuE39-PpZ-Ve1yH1kewEYHwy-iwFLL_jq-Wg=w2400"
     },
     p3 = {
         id: 3,
         nombre: "Pizza especial",
         precio: 1000,
-        imagen: "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400" 
+        imagen: "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400"
     }
 ];
 
-function dibujarCardsDeProductos () { 
-    for (let producto of productos) {
-        let cardDeProductos = document.querySelector('#listadoProductos');
+function dibujarCardsDeProductos() {
+    for (const producto of productos) {
+        const cardDeProductos = document.querySelector('#listadoProductos');
         cardDeProductos.innerHTML += `
         <div class="col">
             <div class="card">
@@ -36,12 +36,31 @@ function dibujarCardsDeProductos () {
     };
 };
 
-function crearListaDesplegableProductos () {
-    for (let producto of productos) {
-        let dropdownList = document.querySelector('#dropdownList');
+const dropdownList = document.getElementById('dropdownList');
+const inputCantidadSeleccionada = document.getElementById('inputCantidadSeleccionada');
+const resultadoTotalParcial = document.getElementById('resultadoTotalParcial');
+
+function crearDropdownListProductos() {
+    for (const producto of productos) {
         dropdownList.innerHTML += `<option value="${producto.id}">${producto.nombre}</option>`;
     };
 };
 
+function calcularTotalParcial() {
+    let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
+    let idProductSeleccionado = dropdownList.value;
+    let valorNoValido = false;
+    cantidadSeleccionada || (valorNoValido = true);
+    idProductSeleccionado || (valorNoValido = true);
+    if (valorNoValido === false) {
+        for (const producto of productos) {
+            (producto.id === parseInt(idProductSeleccionado)) && (resultadoTotalParcial.value = producto.precio * cantidadSeleccionada);
+    };
+    } else {resultadoTotalParcial.value = ""};
+};
+
+
+dropdownList.addEventListener('change', calcularTotalParcial);
+inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
 dibujarCardsDeProductos();
-crearListaDesplegableProductos();
+crearDropdownListProductos();

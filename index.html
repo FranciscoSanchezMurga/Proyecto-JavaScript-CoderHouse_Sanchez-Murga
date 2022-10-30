@@ -16,28 +16,23 @@
 
         <!-- LISTA DE PRODUCTOS -->
         <h3>Productos</h3>
-        <div id="listadoProductos" class="row row-cols-1 row-cols-md-3 g-3"></div>
+        <div id="listadoProductos" class="row row-cols-3 g-3"></div>
 
         <!-- SELECTOR DE PRODUCTOS -->
 
         <h3>Introduzca su orden aquí</h3>
-        <br>
-        <div class="input-group">
-            <label class="input-group-text" for="dropdownList">Producto</label>
-            <select class="form-select" id="dropdownList">
-                <option disabled selected>Lista de opciones desplegable</option>
-            </select>
-            <label class="input-group-text" for="idCantidad">Cantidad</label>
-            <input type="number" id="idCantidad" min="0" aria-label="Last name" class="form-control">
-            <span class="input-group-text">Total parcial</span>
-            <input readonly type="text">
-        </div>
-
-        <!-- BOTÓN PARA SUMAR AL CARRITO -->
-
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-outline-dark" type="button">SUMAR AL CARRITO</button>
-        </div>
+        <form class="input-group">
+                <label class="input-group-text" for="dropdownList">Producto</label>
+                <select id="dropdownList" type="text" class="form-select">
+                    <option hidden></option>
+                </select>
+                <label class="input-group-text" for="inputCantidadSeleccionada">Cantidad</label>
+                <input id="inputCantidadSeleccionada" type="number" class="form-control" min="0">
+                <span class="input-group-text">Total parcial</span>
+                <input id="resultadoTotalParcial" type="text" readonly>
+                <button type="submit" class="btn btn-outline-dark" type="button">SUMAR AL CARRITO</button>
+            </div>
+        </form>
 
         <!-- CARRITO -->
 
@@ -56,32 +51,6 @@
             </li>
             <!-- Items de la lista -->
             <li class="list-group-item">
-                <div class="row text-center d-flex justify-content-between align-items-center">
-                    <div class="col-2">Sándwich de milanesa</div>
-                    <div class="col-2">
-                        <div class="w-auto badge bg-primary rounded-pill">2</div>
-                    </div>
-                    <div class="col-2 fw-light">x</div>
-                    <div class="col-2">$500</div>
-                    <div class="col-1 fw-light">=</div>
-                    <div class="col-2">
-                        <div class="w-auto badge bg-primary rounded-pill">$ 1000</div>
-                    </div>
-                    <div class="col-1 btn btn-outline-danger w-auto">X</div>
-                </div>
-                <div class="row text-center d-flex justify-content-between align-items-center">
-                    <div class="col-2">Sándwich de milanesa</div>
-                    <div class="col-2">
-                        <div class="w-auto badge bg-primary rounded-pill">2</div>
-                    </div>
-                    <div class="col-2 fw-light">x</div>
-                    <div class="col-2">$500</div>
-                    <div class="col-1 fw-light">=</div>
-                    <div class="col-2">
-                        <div class="w-auto badge bg-primary rounded-pill">$ 1000</div>
-                    </div>
-                    <div class="col-1 btn btn-outline-danger w-auto">X</div>
-                </div>
                 <div class="row text-center d-flex justify-content-between align-items-center">
                     <div class="col-2">Sándwich de milanesa</div>
                     <div class="col-2">
