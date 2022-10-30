@@ -40,6 +40,7 @@ const dropdownList = document.getElementById('dropdownList');
 const inputCantidadSeleccionada = document.getElementById('inputCantidadSeleccionada');
 const resultadoTotalParcial = document.getElementById('resultadoTotalParcial');
 const btnSumarAlCarrito = document.getElementById('btnSumarAlCarrito');
+const listaOrdenes = document.getElementById('listaOrdenes');
 let numeroOrden = 0;
 
 function crearDropdownListProductos() {
@@ -98,7 +99,6 @@ function guardarOrdenEnLocalStorage() {
 
 function sumarOrdenAlCarrito() {
     const ordenNueva = new ConstructorOrdenes();
-    const listaOrdenes = document.getElementById('listaOrdenes');
     listaOrdenes.innerHTML += `
     <li class="list-group-item">
         <div class="row text-center d-flex justify-content-between align-items-center">
@@ -124,7 +124,7 @@ function resetearInputsProductoYCantidad() {
     inputCantidadSeleccionada.reset();
 };
 
-btnSumarAlCarrito.addEventListener('click', function () {
+btnSumarAlCarrito.addEventListener('click', function (evt) {
 	evt.preventDefault();
     guardarOrdenEnLocalStorage();
     sumarOrdenAlCarrito();
