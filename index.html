@@ -19,17 +19,18 @@
         <div id="listadoProductos" class="row row-cols-1 row-cols-md-3 g-3"></div>
 
         <!-- SELECTOR DE PRODUCTOS -->
+
+        <h3>Introduzca su orden aquí</h3>
         <br>
         <div class="input-group">
-            <label class="input-group-text" for="idProductos">Producto</label>
-            <select class="form-select" id="idProductos">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <label class="input-group-text" for="dropdownList">Producto</label>
+            <select class="form-select" id="dropdownList">
+                <option disabled selected>Lista de opciones desplegable</option>
             </select>
             <label class="input-group-text" for="idCantidad">Cantidad</label>
             <input type="number" id="idCantidad" min="0" aria-label="Last name" class="form-control">
+            <span class="input-group-text">Total parcial</span>
+            <input readonly type="text">
         </div>
 
         <!-- BOTÓN PARA SUMAR AL CARRITO -->
@@ -98,7 +99,7 @@
         </ul>
 
         <div class="input-group mb-3">
-            <span class="input-group-text">$</span>
+            <span class="input-group-text">A PAGAR</span>
             <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon"
                 aria-describedby="button-addon1">
             <button class="btn btn-success" type="button" id="button-addon1">Confirmar pedido</button>

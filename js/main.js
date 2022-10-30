@@ -16,7 +16,7 @@ let productos = [
         nombre: "Pizza especial",
         precio: 1000,
         imagen: "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400" 
-    },
+    }
 ];
 
 function dibujarCardsDeProductos () { 
@@ -36,7 +36,12 @@ function dibujarCardsDeProductos () {
     };
 };
 
+function crearListaDesplegableProductos () {
+    for (let producto of productos) {
+        let dropdownList = document.querySelector('#dropdownList');
+        dropdownList.innerHTML += `<option value="${producto.id}">${producto.nombre}</option>`;
+    };
+};
+
 dibujarCardsDeProductos();
-
-
-
+crearListaDesplegableProductos();
