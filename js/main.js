@@ -15,6 +15,28 @@ let productos = [
         id: 3,
         nombre: "Pizza especial",
         precio: 1000,
-        imagen: "" 
+        imagen: "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400" 
     },
 ];
+
+function dibujarCardsDeProductos () { 
+    for (let producto of productos) {
+        let cardDeProductos = document.querySelector('#listadoProductos');
+        cardDeProductos.innerHTML += `
+        <div class="col">
+            <div class="card">
+                <img src="${producto.imagen}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${producto.nombre}</h5>
+                    <p class="card-text">$ ${producto.precio}</p>
+                </div>
+            </div>
+        </div>
+        `;
+    };
+};
+
+dibujarCardsDeProductos();
+
+
+
