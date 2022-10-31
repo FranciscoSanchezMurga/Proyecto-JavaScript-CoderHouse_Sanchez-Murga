@@ -21,7 +21,7 @@
         <!-- SELECTOR DE PRODUCTOS -->
 
         <h3>Introduzca su orden aquí</h3>
-        <form class="input-group">
+        <form id="selectorProductoYCantidad" class="input-group">
                 <label class="input-group-text" for="dropdownList">Producto</label>
                 <select id="dropdownList" type="text" class="form-select">
                     <option hidden></option>
@@ -29,7 +29,7 @@
                 <label class="input-group-text" for="inputCantidadSeleccionada">Cantidad</label>
                 <input id="inputCantidadSeleccionada" type="number" class="form-control" min="0">
                 <span class="input-group-text">Total parcial</span>
-                <input id="resultadoTotalParcial" type="text" readonly>
+                <input id="totalParcial" type="text" readonly>
                 <button id="btnSumarAlCarrito" type="submit" class="btn btn-outline-dark" type="button">SUMAR AL CARRITO</button>
             </div>
         </form>
@@ -51,27 +51,11 @@
                 </div>
             </li>
             <!-- Items de la lista -->
-            <li class="list-group-item">
-                <div class="row text-center d-flex justify-content-between align-items-center">
-                    <div class="col-1">33</div>
-                    <div class="col-2">Sándwich de milanesa</div>
-                    <div class="col-2">
-                        <div class="w-auto badge bg-primary rounded-pill">2</div>
-                    </div>
-                    <div class="col-1 fw-light">x</div>
-                    <div class="col-2">$500</div>
-                    <div class="col-1 fw-light">=</div>
-                    <div class="col-2">
-                        <div class="w-auto badge bg-primary rounded-pill">$ 1000</div>
-                    </div>
-                    <div class="col-1 btn btn-outline-danger w-auto">X</div>
-                </div>
-            </li>
         </ul>
 
         <div class="input-group mb-3">
             <span class="input-group-text">A PAGAR</span>
-            <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon"
+            <input id="totalAPagar" type="text" class="form-control"
                 aria-describedby="button-addon1">
             <button class="btn btn-success" type="button" id="button-addon1">Confirmar pedido</button>
         </div>

@@ -19,6 +19,16 @@ let productos = [
     }
 ];
 
+const dropdownList = document.getElementById('dropdownList');
+const inputCantidadSeleccionada = document.getElementById('inputCantidadSeleccionada');
+const totalParcial = document.getElementById('totalParcial');
+const btnSumarAlCarrito = document.getElementById('btnSumarAlCarrito');
+const listaOrdenes = document.getElementById('listaOrdenes');
+const selectorProductoYCantidad = document.querySelector("#selectorProductoYCantidad");
+const totalesParcialesEnCarrito = document.getElementsByClassName("classTotalesParciales");
+const totalAPagar = document.getElementById('totalAPagar');
+let numeroOrden = 0;
+
 function dibujarCardsDeProductos() {
     for (const producto of productos) {
         const cardDeProductos = document.querySelector('#listadoProductos');
@@ -35,13 +45,6 @@ function dibujarCardsDeProductos() {
         `;
     };
 };
-
-const dropdownList = document.getElementById('dropdownList');
-const inputCantidadSeleccionada = document.getElementById('inputCantidadSeleccionada');
-const resultadoTotalParcial = document.getElementById('resultadoTotalParcial');
-const btnSumarAlCarrito = document.getElementById('btnSumarAlCarrito');
-const listaOrdenes = document.getElementById('listaOrdenes');
-let numeroOrden = 0;
 
 function crearDropdownListProductos() {
     for (const producto of productos) {
@@ -66,29 +69,23 @@ function calcularTotalParcial() {
     let valorNoValido = validarProductoYCantidadIngresada();
     if (valorNoValido === false) {
         for (const producto of productos) {
-            (producto.id === parseInt(idProductoSeleccionado)) && (resultadoTotalParcial.value = producto.precio * cantidadSeleccionada);
+            (producto.id === parseInt(idProductoSeleccionado)) && (totalParcial.value = producto.precio * cantidadSeleccionada);
         };
-    } else { resultadoTotalParcial.value = "" };
+    } else { totalParcial.value = "" };
 };
 
 function ConstructorOrdenes() {
     numeroOrden += 1;
-    const idProductoSeleccionado = dropdownList.value;
+    const idProductoSeleccionado = parseInt(dropdownList.value);
     const cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
+    const valorTotalParcial = parseInt|(totalParcial.value);
+    const p = productos.find(producto => producto.id === idProductoSeleccionado)
     this.numeroOrden = numeroOrden;
     this.idProductoSeleccionado = idProductoSeleccionado;
     this.cantidadSeleccionada = cantidadSeleccionada;
-    for (const producto of productos) {
-        if (producto.id === idProductoSeleccionado) {
-            const nombre = producto.nombre;
-            this.nombre = nombre;
-            const precioUnitario = producto.precioUnitario;
-            this.precioUnitario = precioUnitario;
-            const totalParcial = resultadoTotalParcial.value;
-            this.totalParcial = totalParcial;
-        };
-        this.datosTemporales = [getSeconds(), getMinutes(), getHours(), getDate(), getMonth(), getFullYear(),];
-    };
+    this.nombre = p.nombre;
+    this.precioUnitario = p.precio;
+    this.totalParcial = valorTotalParcial;
 };
 
 function guardarOrdenEnLocalStorage() {
@@ -98,7 +95,7 @@ function guardarOrdenEnLocalStorage() {
 };
 
 function sumarOrdenAlCarrito() {
-    const ordenNueva = new ConstructorOrdenes();
+    const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
     <li class="list-group-item">
         <div class="row text-center d-flex justify-content-between align-items-center">
@@ -108,10 +105,10 @@ function sumarOrdenAlCarrito() {
                 <div class="w-auto badge bg-primary rounded-pill">${ordenNueva.cantidadSeleccionada}</div>
             </div>
             <div class="col-1 fw-light">x</div>
-            <div class="col-2">$ ${ordenNueva.precioUnitario}</div>
+            <div class="col-2">${ordenNueva.precioUnitario}</div>
             <div class="col-1 fw-light">=</div>
             <div class="col-2">
-                <div class="w-auto badge bg-primary rounded-pill">$ ${ordenNueva.totalParcial}</div>
+                <div class="classTotalesParciales w-auto badge bg-primary rounded-pill">${ordenNueva.totalParcial}</div>
             </div>
             <div class="col-1 btn btn-outline-danger w-auto">X</div>
         </div>
@@ -119,26 +116,26 @@ function sumarOrdenAlCarrito() {
     `;
 };
 
-function resetearInputsProductoYCantidad() {
-    dropdownList.reset();
-    inputCantidadSeleccionada.reset();
+function calcularTotal() {
+    let total = 0;
+    for (i=0; i < totalesParcialesEnCarrito.length ; i += 1) {
+        total += parseInt(totalesParcialesEnCarrito[i].textContent);
+    };
+    totalAPagar.setAttribute('value', total);
 };
 
 btnSumarAlCarrito.addEventListener('click', function (evt) {
 	evt.preventDefault();
     guardarOrdenEnLocalStorage();
     sumarOrdenAlCarrito();
-    resetearInputsProductoYCantidad();
+    calcularTotal();
+    selectorProductoYCantidad.reset();
 });
 
-// btnSumarAlCarrito.addEventListener('click', function () {
-//     guardarOrdenEnLocalStorage();
-//     sumarOrdenAlCarrito();
-//     resetearInputsProductoYCantidad();
-// });
-
-
 dropdownList.addEventListener('change', calcularTotalParcial);
+
 inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
+
 dibujarCardsDeProductos();
+
 crearDropdownListProductos();
