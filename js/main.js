@@ -97,7 +97,7 @@ function guardarOrdenEnLocalStorage() {
 function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
-    <li class="list-group-item">
+    <li id="orden${numeroOrden}" class="list-group-item">
         <div class="row text-center d-flex justify-content-between align-items-center">
             <div class="col-1">${ordenNueva.numeroOrden}</div>
             <div class="col-2">${ordenNueva.nombre}</div>
@@ -131,6 +131,11 @@ btnSumarAlCarrito.addEventListener('click', function (evt) {
     calcularTotal();
     selectorProductoYCantidad.reset();
 });
+
+function eliminarOrdenDelCarrito() {
+    // parentNode
+    
+};
 
 dropdownList.addEventListener('change', calcularTotalParcial);
 
