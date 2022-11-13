@@ -11,31 +11,36 @@ let seccionProductos = document.getElementById('seccionProductos');
 let btnOcultarProductos;
 let numeroOrden = 0;
 
-function guardarProductosEnLocalStorage() {
-    fetch("./data/productos.json")
-        .then(resultado => resultado.json())
-        .then((productos) => {
-            console.log(productos);
-            productos.forEach((producto) => {
-                const idProducto = producto.id;
-                const idLocalStorage = "p" + idProducto;
-                console.log(producto);
-                const productoJSON = JSON.stringify(producto);
-                localStorage.setItem(idLocalStorage, productoJSON);
-                localStorage.removeItem(undefined);
-            })
-        })
+async function crearDropdownListProductos() {
+    const respuesta = await fetch('./data/productos.json');
+    const productos = await respuesta.json();
+    for (const producto of productos) {
+        dropdownList.innerHTML += `<option value="${producto.id}">${producto.nombre}</option>`;
+    };
 };
 
-async function MostrarProductos() {
+function traerProductosDeBD_guardarlosEnLocalStorage() {
+    fetch("./data/productos.json")
+        .then(respuesta => respuesta.json())
+        .then(productos => {
+            const productosJSON = JSON.stringify(productos);
+            localStorage.setItem("productos", productosJSON);
+        })
+        .catch(error => console.log("No se pudo extraer datos de la BD o guardarla en localStorage: " + error));
+};
+
+function extraerProductosDeLocalStorage() {
+    return JSON.parse(localStorage.getItem("productos"));
+};
+
+
+function MostrarProductos() {
     seccionProductos.innerHTML = `
     <button id="btnOcultarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ocultar productos</button>
     <div id="containerCardsDeProductos" class="row row-cols-3 g-3"></div>
     `;
-    const respuesta = await fetch('./data/productos.json');
-    const productos = await respuesta.json();
+    const productos = extraerProductosDeLocalStorage();
     for (const producto of productos) {
-        console.log(producto);
         const containerCardsDeProductos = document.querySelector('#containerCardsDeProductos');
         containerCardsDeProductos.innerHTML += `
         <div class="col">
@@ -61,14 +66,6 @@ function OcultarProductos() {
     btnMostrarProductos.addEventListener("click", MostrarProductos);
 };
 
-async function crearDropdownListProductos() {
-    const respuesta = await fetch('./data/productos.json');
-    const productos = await respuesta.json();
-    for (const producto of productos) {
-        dropdownList.innerHTML += `<option value="${producto.id}">${producto.nombre}</option>`;
-    };
-};
-
 function validarProductoYCantidadIngresada() {
     let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
     let idProductoSeleccionado = dropdownList.value;
@@ -84,18 +81,13 @@ function calcularTotalParcial() {
     let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
     let idProductoSeleccionado = dropdownList.value;
     let valorNoValido = validarProductoYCantidadIngresada();
-    fetch("./data/productos.json")
-        .then(resultado => {
-            return resultado.json();
-        })
-        .then(productos => {
-            if (valorNoValido === false) {
-                for (const producto of productos) {
-                    (producto.id === parseInt(idProductoSeleccionado)) && (totalParcial.value = producto.precio * cantidadSeleccionada);
-                };
-            } else { totalParcial.value = "" };
-        })
-        .catch(error => console.log("Error con datos en calcularTotalParcial(): " + error));
+    const productos = extraerProductosDeLocalStorage();
+    if (valorNoValido === false) {
+        for (const producto of productos) {
+            (producto.id === parseInt(idProductoSeleccionado)) && (totalParcial.value = producto.precio * cantidadSeleccionada);
+        };
+    } else { totalParcial.value = "" };
+
 };
 
 function ConstructorOrdenes() {
@@ -103,32 +95,23 @@ function ConstructorOrdenes() {
     const idProductoSeleccionado = parseInt(dropdownList.value);
     const cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
     const valorTotalParcial = parseInt | (totalParcial.value);
-    fetch("./data/productos.json")
-        .then(resultado => {
-            return resultado.json()
-        })
-        .then(productos => {
-            const p = productos.find(producto => producto.id === idProductoSeleccionado)
-
-            this.numeroOrden = numeroOrden;
-            this.idProductoSeleccionado = idProductoSeleccionado;
-            this.cantidadSeleccionada = cantidadSeleccionada;
-            this.nombre = p.nombre;
-            this.precioUnitario = p.precio;
-            this.totalParcial = valorTotalParcial;
-        })
+    const productos = extraerProductosDeLocalStorage();
+    const p = productos.find(producto => producto.id === idProductoSeleccionado);
+    this.numeroOrden = numeroOrden;
+    this.idProductoSeleccionado = idProductoSeleccionado;
+    this.cantidadSeleccionada = cantidadSeleccionada;
+    this.nombre = p.nombre;
+    this.precioUnitario = p.precio;
+    this.totalParcial = valorTotalParcial;
 };
 
 function guardarOrdenEnLocalStorage() {
-
     const ordenNueva = new ConstructorOrdenes();
-
-    console.log(ordenNueva);
     const jsonOrdenNueva = JSON.stringify(ordenNueva);
     localStorage.setItem(ordenNueva.numeroOrden, jsonOrdenNueva);
 };
 
-async function sumarOrdenAlCarrito() {
+function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
     <li id="orden${ordenNueva.numeroOrden}" class="list-group-item">
@@ -170,9 +153,9 @@ dropdownList.addEventListener('change', calcularTotalParcial);
 
 inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
 
-document.addEventListener("DOMContentLoaded", ()=> {
-    guardarProductosEnLocalStorage();
-    crearDropdownListProductos();
-});
+crearDropdownListProductos();
+traerProductosDeBD_guardarlosEnLocalStorage();
+
+
 
 
