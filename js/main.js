@@ -9,6 +9,7 @@ const totalAPagar = document.getElementById('totalAPagar');
 let btnMostrarProductos = document.getElementById('btnMostrarProductos');
 let seccionProductos = document.getElementById('seccionProductos');
 let btnOcultarProductos;
+let botonesEliminar;
 let numeroOrden = 0;
 
 async function crearDropdownListProductos() {
@@ -115,7 +116,7 @@ function mostrarOcultarCarrito() {
     const seccionCarrito = document.getElementById('seccionCarrito');
     if (listaOrdenes.childElementCount > 1) {
         seccionCarrito.removeAttribute('hidden')
-    } else { seccionCarrito.setAttribute('hidden','')}
+    } else { seccionCarrito.setAttribute('hidden', '') }
 };
 
 function sumarOrdenAlCarrito() {
@@ -134,14 +135,18 @@ function sumarOrdenAlCarrito() {
             <div class="col-2">
                 <div class="classTotalesParciales w-auto badge bg-primary rounded-pill">${ordenNueva.totalParcial}</div>
             </div>
-            <div class="col-1 btn btn-outline-danger w-auto">X</div>
+            <button class="botonesEliminar col-1 btn btn-outline-danger w-auto">X</button>
         </div>
     </li>
     `;
     mostrarOcultarCarrito();
-};
-
-
+    botonesEliminar = document.getElementsByClassName('botonesEliminar');
+    console.log(botonesEliminar);
+    botonesEliminar.addEventListener('click', (evt)=> {
+        evt.preventDefault();
+        evt.target.remove();
+    })
+}
 
 function calcularTotal() {
     let total = 0;
