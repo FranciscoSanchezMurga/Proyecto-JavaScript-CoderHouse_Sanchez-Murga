@@ -1,24 +1,3 @@
-let productos = [
-    p1 = {
-        id: 1,
-        nombre: "Sándwich de milanesa",
-        precio: 500,
-        imagen: "https://lh3.googleusercontent.com/lcn0osAXTRZedXLFntYvZFjHCXlKjVjt5fv-JAzRHt-dOubZ3oRhrbnxBcuDwboHMkT_MjqZTXzDdYqqVYs6pPpGq1aHxGamLCATNbCzqEmP34MHgdegnuxFD-7s3ktRLmp6HC5_Mg=w2400"
-    },
-    p2 = {
-        id: 2,
-        nombre: "Sándwich de lomito",
-        precio: 600,
-        imagen: "https://lh3.googleusercontent.com/hAClHNkCCYYkElrvYuWFo2A8nSpgC49jesphUrELgan92tjqb5EKyO_iX0-hiBqEDfA3l4LHqCsK4Ukk_Rb6llFibrkELTaiVYMGiGQuE39-PpZ-Ve1yH1kewEYHwy-iwFLL_jq-Wg=w2400"
-    },
-    p3 = {
-        id: 3,
-        nombre: "Pizza especial",
-        precio: 1000,
-        imagen: "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400"
-    }
-];
-
 const dropdownList = document.getElementById('dropdownList');
 const inputCantidadSeleccionada = document.getElementById('inputCantidadSeleccionada');
 const totalParcial = document.getElementById('totalParcial');
@@ -27,12 +6,68 @@ const listaOrdenes = document.getElementById('listaOrdenes');
 const selectorProductoYCantidad = document.querySelector("#selectorProductoYCantidad");
 const totalesParcialesEnCarrito = document.getElementsByClassName("classTotalesParciales");
 const totalAPagar = document.getElementById('totalAPagar');
+let btnMostrarProductos = document.getElementById('btnMostrarProductos');
+let seccionProductos = document.getElementById('seccionProductos');
+let btnOcultarProductos;
 let numeroOrden = 0;
 
-function dibujarCardsDeProductos() {
+
+// function obtenerProductos() {
+//     fetch("./data/productos.json")
+//         .then(respuesta => respuesta.json())
+//         .then()
+//         .catch(error => {
+//             return console.log("Datos de productos no accesibles" + error);
+//         });
+// };
+
+
+
+// btnMostrarProductos.addEventListener("click", (evt) => {
+//     dibujarCardsDeProductos(evt)
+// }
+// );
+
+
+// function dibujarCardsDeProductos(evt) {
+//     const urlHTMLProductos = "./pages/productos.html";
+//     fetch(urlHTMLProductos) 
+//         .then( resultado => {
+//             return resultado.text();
+//         })
+//         .then ( HTMLProductos => {
+//             containerProductos.innerHTML = HTMLProductos;
+//         })
+//         .catch( err => console.log(err))
+
+//     for (const producto of productos) {
+//         const cardDeProductos = document.querySelector('#listadoProductos');
+//         cardDeProductos.innerHTML += `
+//         <div class="col">
+//             <div class="card">
+//                 <img src="${producto.imagen}" class="card-img-top" alt="...">
+//                 <div class="card-body">
+//                     <h5 class="card-title">${producto.nombre}</h5>
+//                     <p class="card-text">$ ${producto.precio}</p>
+//                 </div>
+//             </div>
+//         </div>
+//         `;
+//     };
+// };
+
+
+async function MostrarProductos() {
+    seccionProductos.innerHTML = `
+    <button id="btnOcultarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ocultar productos</button>
+    <div id="containerCardsDeProductos" class="row row-cols-3 g-3"></div>
+    `;
+    const respuesta = await fetch('./data/productos.json');
+    const productos = await respuesta.json();
     for (const producto of productos) {
-        const cardDeProductos = document.querySelector('#listadoProductos');
-        cardDeProductos.innerHTML += `
+        console.log(producto);
+        const containerCardsDeProductos = document.querySelector('#containerCardsDeProductos');
+        containerCardsDeProductos.innerHTML += `
         <div class="col">
             <div class="card">
                 <img src="${producto.imagen}" class="card-img-top" alt="...">
@@ -44,9 +79,22 @@ function dibujarCardsDeProductos() {
         </div>
         `;
     };
+    btnOcultarProductos = document.getElementById('btnOcultarProductos');
+    btnOcultarProductos.addEventListener("click", OcultarProductos);
 };
 
-function crearDropdownListProductos() {
+function OcultarProductos() {
+    seccionProductos.innerHTML = `<button id="btnMostrarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ver productos</button>`;
+    btnMostrarProductos = document.getElementById('btnMostrarProductos');
+    btnMostrarProductos.addEventListener("click", MostrarProductos);
+};
+
+btnMostrarProductos.addEventListener("click", MostrarProductos);
+
+
+async function crearDropdownListProductos() {
+    const respuesta = await fetch('./data/productos.json');
+    const productos = await respuesta.json();
     for (const producto of productos) {
         dropdownList.innerHTML += `<option value="${producto.id}">${producto.nombre}</option>`;
     };
@@ -78,7 +126,7 @@ function ConstructorOrdenes() {
     numeroOrden += 1;
     const idProductoSeleccionado = parseInt(dropdownList.value);
     const cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
-    const valorTotalParcial = parseInt|(totalParcial.value);
+    const valorTotalParcial = parseInt | (totalParcial.value);
     const p = productos.find(producto => producto.id === idProductoSeleccionado)
     this.numeroOrden = numeroOrden;
     this.idProductoSeleccionado = idProductoSeleccionado;
@@ -118,29 +166,22 @@ function sumarOrdenAlCarrito() {
 
 function calcularTotal() {
     let total = 0;
-    for (i=0; i < totalesParcialesEnCarrito.length ; i += 1) {
+    for (i = 0; i < totalesParcialesEnCarrito.length; i += 1) {
         total += parseInt(totalesParcialesEnCarrito[i].textContent);
     };
     totalAPagar.setAttribute('value', total);
 };
 
 btnSumarAlCarrito.addEventListener('click', function (evt) {
-	evt.preventDefault();
+    evt.preventDefault();
     guardarOrdenEnLocalStorage();
     sumarOrdenAlCarrito();
     calcularTotal();
     selectorProductoYCantidad.reset();
 });
 
-function eliminarOrdenDelCarrito() {
-    // parentNode
-    
-};
-
 dropdownList.addEventListener('change', calcularTotalParcial);
 
 inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
-
-dibujarCardsDeProductos();
 
 crearDropdownListProductos();
