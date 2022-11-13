@@ -119,6 +119,17 @@ function mostrarOcultarCarrito() {
     } else { seccionCarrito.setAttribute('hidden', '') }
 };
 
+function implementarFuncionalidadEliminarOrden() {
+    botonesEliminar = document.getElementsByClassName('botonesEliminar');
+    for (let i = 0; i < botonesEliminar.length; i += 1) {
+        botonesEliminar[i].addEventListener('click', (evt) => {
+            evt.preventDefault();
+            evt.target.parentElement.parentElement.remove();
+            mostrarOcultarCarrito();
+        });
+    };
+};
+
 function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
@@ -140,13 +151,8 @@ function sumarOrdenAlCarrito() {
     </li>
     `;
     mostrarOcultarCarrito();
-    botonesEliminar = document.getElementsByClassName('botonesEliminar');
-    console.log(botonesEliminar);
-    botonesEliminar.addEventListener('click', (evt)=> {
-        evt.preventDefault();
-        evt.target.remove();
-    })
-}
+    implementarFuncionalidadEliminarOrden();
+};
 
 function calcularTotal() {
     let total = 0;
