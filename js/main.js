@@ -111,6 +111,13 @@ function guardarOrdenEnLocalStorage() {
     localStorage.setItem(ordenNueva.numeroOrden, jsonOrdenNueva);
 };
 
+function mostrarOcultarCarrito() {
+    const seccionCarrito = document.getElementById('seccionCarrito');
+    if (listaOrdenes.childElementCount > 1) {
+        seccionCarrito.removeAttribute('hidden')
+    } else { seccionCarrito.setAttribute('hidden','')}
+};
+
 function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
@@ -131,7 +138,10 @@ function sumarOrdenAlCarrito() {
         </div>
     </li>
     `;
+    mostrarOcultarCarrito();
 };
+
+
 
 function calcularTotal() {
     let total = 0;
