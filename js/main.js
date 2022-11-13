@@ -11,6 +11,22 @@ let seccionProductos = document.getElementById('seccionProductos');
 let btnOcultarProductos;
 let numeroOrden = 0;
 
+function guardarProductosEnLocalStorage() {
+    fetch("./data/productos.json")
+        .then(resultado => resultado.json())
+        .then((productos) => {
+            console.log(productos);
+            productos.forEach((producto) => {
+                const idProducto = producto.id;
+                const idLocalStorage = "p" + idProducto;
+                console.log(producto);
+                const productoJSON = JSON.stringify(producto);
+                localStorage.setItem(idLocalStorage, productoJSON);
+                localStorage.removeItem(undefined);
+            })
+        })
+};
+
 async function MostrarProductos() {
     seccionProductos.innerHTML = `
     <button id="btnOcultarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ocultar productos</button>
@@ -154,4 +170,9 @@ dropdownList.addEventListener('change', calcularTotalParcial);
 
 inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
 
-crearDropdownListProductos();
+document.addEventListener("DOMContentLoaded", ()=> {
+    guardarProductosEnLocalStorage();
+    crearDropdownListProductos();
+});
+
+
