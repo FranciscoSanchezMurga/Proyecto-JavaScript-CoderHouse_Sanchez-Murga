@@ -11,52 +11,6 @@ let seccionProductos = document.getElementById('seccionProductos');
 let btnOcultarProductos;
 let numeroOrden = 0;
 
-
-// function obtenerProductos() {
-//     fetch("./data/productos.json")
-//         .then(respuesta => respuesta.json())
-//         .then()
-//         .catch(error => {
-//             return console.log("Datos de productos no accesibles" + error);
-//         });
-// };
-
-
-
-// btnMostrarProductos.addEventListener("click", (evt) => {
-//     dibujarCardsDeProductos(evt)
-// }
-// );
-
-
-// function dibujarCardsDeProductos(evt) {
-//     const urlHTMLProductos = "./pages/productos.html";
-//     fetch(urlHTMLProductos) 
-//         .then( resultado => {
-//             return resultado.text();
-//         })
-//         .then ( HTMLProductos => {
-//             containerProductos.innerHTML = HTMLProductos;
-//         })
-//         .catch( err => console.log(err))
-
-//     for (const producto of productos) {
-//         const cardDeProductos = document.querySelector('#listadoProductos');
-//         cardDeProductos.innerHTML += `
-//         <div class="col">
-//             <div class="card">
-//                 <img src="${producto.imagen}" class="card-img-top" alt="...">
-//                 <div class="card-body">
-//                     <h5 class="card-title">${producto.nombre}</h5>
-//                     <p class="card-text">$ ${producto.precio}</p>
-//                 </div>
-//             </div>
-//         </div>
-//         `;
-//     };
-// };
-
-
 async function MostrarProductos() {
     seccionProductos.innerHTML = `
     <button id="btnOcultarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ocultar productos</button>
@@ -83,14 +37,13 @@ async function MostrarProductos() {
     btnOcultarProductos.addEventListener("click", OcultarProductos);
 };
 
+btnMostrarProductos.addEventListener("click", MostrarProductos);
+
 function OcultarProductos() {
     seccionProductos.innerHTML = `<button id="btnMostrarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ver productos</button>`;
     btnMostrarProductos = document.getElementById('btnMostrarProductos');
     btnMostrarProductos.addEventListener("click", MostrarProductos);
 };
-
-btnMostrarProductos.addEventListener("click", MostrarProductos);
-
 
 async function crearDropdownListProductos() {
     const respuesta = await fetch('./data/productos.json');
@@ -115,11 +68,18 @@ function calcularTotalParcial() {
     let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
     let idProductoSeleccionado = dropdownList.value;
     let valorNoValido = validarProductoYCantidadIngresada();
-    if (valorNoValido === false) {
-        for (const producto of productos) {
-            (producto.id === parseInt(idProductoSeleccionado)) && (totalParcial.value = producto.precio * cantidadSeleccionada);
-        };
-    } else { totalParcial.value = "" };
+    fetch("./data/productos.json")
+        .then(resultado => {
+            return resultado.json();
+        })
+        .then(productos => {
+            if (valorNoValido === false) {
+                for (const producto of productos) {
+                    (producto.id === parseInt(idProductoSeleccionado)) && (totalParcial.value = producto.precio * cantidadSeleccionada);
+                };
+            } else { totalParcial.value = "" };
+        })
+        .catch(error => console.log("Error con datos en calcularTotalParcial(): " + error));
 };
 
 function ConstructorOrdenes() {
@@ -127,25 +87,35 @@ function ConstructorOrdenes() {
     const idProductoSeleccionado = parseInt(dropdownList.value);
     const cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
     const valorTotalParcial = parseInt | (totalParcial.value);
-    const p = productos.find(producto => producto.id === idProductoSeleccionado)
-    this.numeroOrden = numeroOrden;
-    this.idProductoSeleccionado = idProductoSeleccionado;
-    this.cantidadSeleccionada = cantidadSeleccionada;
-    this.nombre = p.nombre;
-    this.precioUnitario = p.precio;
-    this.totalParcial = valorTotalParcial;
+    fetch("./data/productos.json")
+        .then(resultado => {
+            return resultado.json()
+        })
+        .then(productos => {
+            const p = productos.find(producto => producto.id === idProductoSeleccionado)
+
+            this.numeroOrden = numeroOrden;
+            this.idProductoSeleccionado = idProductoSeleccionado;
+            this.cantidadSeleccionada = cantidadSeleccionada;
+            this.nombre = p.nombre;
+            this.precioUnitario = p.precio;
+            this.totalParcial = valorTotalParcial;
+        })
 };
 
 function guardarOrdenEnLocalStorage() {
+
     const ordenNueva = new ConstructorOrdenes();
+
+    console.log(ordenNueva);
     const jsonOrdenNueva = JSON.stringify(ordenNueva);
     localStorage.setItem(ordenNueva.numeroOrden, jsonOrdenNueva);
 };
 
-function sumarOrdenAlCarrito() {
+async function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
-    <li id="orden${numeroOrden}" class="list-group-item">
+    <li id="orden${ordenNueva.numeroOrden}" class="list-group-item">
         <div class="row text-center d-flex justify-content-between align-items-center">
             <div class="col-1">${ordenNueva.numeroOrden}</div>
             <div class="col-2">${ordenNueva.nombre}</div>
