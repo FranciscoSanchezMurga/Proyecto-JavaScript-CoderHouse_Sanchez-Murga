@@ -22,7 +22,7 @@ async function crearDropdownListProductos() {
 };
 
 async function traerProductosDeBD_guardarlosEnLocalStorage() {
-   await fetch("./data/productos.json")
+    await fetch("./data/productos.json")
         .then(respuesta => respuesta.json())
         .then(productos => {
             const productosJSON = JSON.stringify(productos);
@@ -165,48 +165,83 @@ function calcularTotal() {
 };
 
 function enviarPedido() {
-    const ordenes = document.getElementsByClassName('ordenes');
-    let ordenesAEnviar = [];
-    for (i = 0; i <= ordenes.length; i += 1) {
-        if (ordenes[i] === undefined) {
-            continue;
-        } else {
-            ordenesAEnviar.push(ordenes[i].getAttribute('id'));
-        };
-    };
-    let preJson = [];
-    ordenesAEnviar.forEach((ordenAEnviar) => {
-        preJson.push(JSON.parse(localStorage.getItem(ordenAEnviar)));
-    });
-    let jsonAEnviar = JSON.stringify(preJson);
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        body: jsonAEnviar,
-        headers: {
-            'Content-type': 'application/json ; charset=UTF-8',
-        }
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
     })
-        // .then(respuesta => {
-        //     return respuesta.json();
-        // })
-        // .then(apiPOST => console.log(apiPOST))
-        .catch(error => console.log("Error en el envío de datos: " + error));
+
+    swalWithBootstrapButtons.fire({
+        title: '¿Enviar el pedido?',
+        text: "Revise que sus ordenes sean correctas",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Enviar',
+        cancelButtonText: 'Volver',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const ordenes = document.getElementsByClassName('ordenes');
+            let ordenesAEnviar = [];
+            for (i = 0; i <= ordenes.length; i += 1) {
+                if (ordenes[i] === undefined) {
+                    continue;
+                } else {
+                    ordenesAEnviar.push(ordenes[i].getAttribute('id'));
+                };
+            };
+            let preJson = [];
+            ordenesAEnviar.forEach((ordenAEnviar) => {
+                preJson.push(JSON.parse(localStorage.getItem(ordenAEnviar)));
+            });
+            let jsonAEnviar = JSON.stringify(preJson);
+            fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                body: jsonAEnviar,
+                headers: {
+                    'Content-type': 'application/json ; charset=UTF-8',
+                }
+            })
+                .then(() => {
+                    swalWithBootstrapButtons.fire(
+                        '¡Su pedido ha sido enviado!',
+                        'En breve le llegará a su domicilio',
+                        'success'
+                    );
+                    limpiarCarrito();
+                    mostrarOcultarCarrito();
+                })
+                .catch((error) => {
+                    swalWithBootstrapButtons.fire(
+                        '¡Problema en la transmisión del pedido a la API!',
+                        'Revise la excepción en la consola',
+                        'error'
+                    );
+                    console.log("Error en el envío de datos: " + error)
+                });
+
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+        }
+    });
+
 };
 
 function limpiarCarrito() {
-    const ordenesFinales = document.getElementsByClassName('ordenes');
     const list = document.getElementById("listaOrdenes");
 
-    while (list.hasChildNodes() && list.children.length >1) {
+    while (list.hasChildNodes() && list.children.length > 1) {
         list.removeChild(list.lastChild);
-      }
-      mostrarOcultarCarrito();
+    };
+    mostrarOcultarCarrito();
 };
 
-btnEnviarPedido.addEventListener("click", ()=> {
+btnEnviarPedido.addEventListener("click", () => {
     enviarPedido();
-    limpiarCarrito();
-    mostrarOcultarCarrito();
 });
 
 btnSumarAlCarrito.addEventListener('click', function (evt) {
