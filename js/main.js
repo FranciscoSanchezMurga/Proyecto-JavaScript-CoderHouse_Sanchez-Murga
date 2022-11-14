@@ -70,13 +70,12 @@ function OcultarProductos() {
 
 function validarProductoYCantidadIngresada() {
     let cantidadSeleccionada = parseInt(inputCantidadSeleccionada.value);
-    let idProductoSeleccionado = dropdownList.value;
+    let idProductoSeleccionado = parseInt(dropdownList.value);
     let valorNoValido = false;
     // Operador OR para identificar valores falsy y setear a true "valorNoValido" para evitar un NaN en el DOM
     cantidadSeleccionada || (valorNoValido = true);
     idProductoSeleccionado || (valorNoValido = true);
     return valorNoValido;
-
 };
 
 function calcularTotalParcial() {
@@ -89,7 +88,6 @@ function calcularTotalParcial() {
             (producto.id === parseInt(idProductoSeleccionado)) && (totalParcial.value = producto.precio * cantidadSeleccionada);
         };
     } else { totalParcial.value = "" };
-
 };
 
 function ConstructorOrdenes() {
@@ -107,10 +105,12 @@ function ConstructorOrdenes() {
     this.totalParcial = valorTotalParcial;
 };
 
-function guardarOrdenEnLocalStorage() {
-    const ordenNueva = new ConstructorOrdenes();
-    const jsonOrdenNueva = JSON.stringify(ordenNueva);
-    localStorage.setItem(ordenNueva.numeroOrden, jsonOrdenNueva);
+function guardarOrdenEnLocalStorage(valorNoValido) {
+    if (valorNoValido === false) {
+        const ordenNueva = new ConstructorOrdenes();
+        const jsonOrdenNueva = JSON.stringify(ordenNueva);
+        localStorage.setItem(ordenNueva.numeroOrden, jsonOrdenNueva);
+    };
 };
 
 function mostrarOcultarCarrito() {
@@ -132,33 +132,68 @@ function implementarFuncionalidadEliminarOrden() {
     };
 };
 
-function sumarOrdenAlCarrito() {
-    const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
-    listaOrdenes.innerHTML += `
-    <li class="ordenes list-group-item">
-        <div class="row text-center d-flex justify-content-between align-items-center">
-            <div class="col-1">${ordenNueva.numeroOrden}</div>
-            <div class="col-2">${ordenNueva.nombre}</div>
-            <div class="col-2">
-                <div class="w-auto badge bg-primary rounded-pill">${ordenNueva.cantidadSeleccionada}</div>
+function sumarOrdenAlCarrito(valorNoValido) {
+    if (valorNoValido === false) {
+        const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
+        listaOrdenes.innerHTML += `
+        <li class="ordenes list-group-item">
+            <div class="row text-center d-flex justify-content-between align-items-center">
+                <div class="col-1">${ordenNueva.numeroOrden}</div>
+                <div class="col-2">${ordenNueva.nombre}</div>
+                <div class="col-2">
+                    <div class="w-auto badge bg-primary rounded-pill">${ordenNueva.cantidadSeleccionada}</div>
+                </div>
+                <div class="col-1 fw-light">x</div>
+                <div class="col-2">${ordenNueva.precioUnitario}</div>
+                <div class="col-1 fw-light">=</div>
+                <div class="col-2">
+                    <div class="classTotalesParciales w-auto badge bg-primary rounded-pill">${ordenNueva.totalParcial}</div>
+                </div>
+                <button class="botonesEliminar col-1 btn btn-outline-danger w-auto">X</button>
             </div>
-            <div class="col-1 fw-light">x</div>
-            <div class="col-2">${ordenNueva.precioUnitario}</div>
-            <div class="col-1 fw-light">=</div>
-            <div class="col-2">
-                <div class="classTotalesParciales w-auto badge bg-primary rounded-pill">${ordenNueva.totalParcial}</div>
-            </div>
-            <button class="botonesEliminar col-1 btn btn-outline-danger w-auto">X</button>
-        </div>
-    </li>
-    `;
-    mostrarOcultarCarrito();
-    implementarFuncionalidadEliminarOrden();
+        </li>
+        `;
+        mostrarOcultarCarrito();
+        implementarFuncionalidadEliminarOrden();
+    } else {
+        Toastify({
+            text: "Complete los campos faltantes",
+            duration: 2500,
+            destination: "https://github.com/apvarun/toastify-js",
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: false, // Prevents dismissing of toast on hover
+            style: {
+                background: "#ca4545" ,
+                color: "white",
+            },
+        }).showToast();
+    };
+};
+
+
+function mensajeDeError() {
+    Toastify({
+        text: "ERROR",
+        duration: 2000,
+        destination: "https://github.com/apvarun/toastify-js",
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "left", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function () { } // Callback after click
+    }).showToast();
 };
 
 function calcularTotal() {
     let total = 0;
-    for (i = 0; i < totalesParcialesEnCarrito.length; i += 1) {
+    for (let i = 0; i < totalesParcialesEnCarrito.length; i += 1) {
         total += parseInt(totalesParcialesEnCarrito[i].textContent);
     };
     totalAPagar.setAttribute('value', total);
@@ -246,19 +281,15 @@ btnEnviarPedido.addEventListener("click", () => {
 
 btnSumarAlCarrito.addEventListener('click', function (evt) {
     evt.preventDefault();
-    guardarOrdenEnLocalStorage();
-    sumarOrdenAlCarrito();
+    const valorNoValido = validarProductoYCantidadIngresada();
+    guardarOrdenEnLocalStorage(valorNoValido);
+    sumarOrdenAlCarrito(valorNoValido);
     calcularTotal();
     selectorProductoYCantidad.reset();
 });
 
-// dropdownList.addEventListener('change', calcularTotalParcial);
 dropdownList.addEventListener('input', calcularTotalParcial);
-// inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
 inputCantidadSeleccionada.addEventListener('input', calcularTotalParcial);
 crearDropdownListProductos();
 traerProductosDeBD_guardarlosEnLocalStorage();
-
-
-
 
