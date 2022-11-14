@@ -133,7 +133,7 @@ function implementarFuncionalidadEliminarOrden() {
 function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
-    <li id="orden${ordenNueva.numeroOrden}" class="list-group-item">
+    <li id="${numeroOrden}" class="ordenes list-group-item">
         <div class="row text-center d-flex justify-content-between align-items-center">
             <div class="col-1">${ordenNueva.numeroOrden}</div>
             <div class="col-2">${ordenNueva.nombre}</div>
@@ -161,6 +161,39 @@ function calcularTotal() {
     };
     totalAPagar.setAttribute('value', total);
 };
+
+function enviarPedido() {
+    const ordenes = document.getElementsByClassName('ordenes');
+    let ordenesAEnviar = [];
+    for( i=0 ; i <= ordenes.length ; i += 1) {
+        if ( ordenes[i] === undefined) {
+            continue;
+        } else {
+            ordenesAEnviar.push(ordenes[i].getAttribute('id'));
+        };
+    };
+    let preJson = [];
+    ordenesAEnviar.forEach( (ordenAEnviar) => {
+        preJson.push(JSON.parse(localStorage.getItem(ordenAEnviar)));
+    });
+    let jsonAEnviar = JSON.stringify(preJson);
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: jsonAEnviar,
+        headers: {
+            'Content-type' : 'application/json ; charset=UTF-8',
+        }
+    })
+        .then( respuesta => {
+            console.log(respuesta);
+            return respuesta.json();
+        })
+        .then( apiPOST => console.log(apiPOST))
+        .catch(error => console.log("Error en el envío de datos: " + error));
+
+};
+
+
 
 btnSumarAlCarrito.addEventListener('click', function (evt) {
     evt.preventDefault();
