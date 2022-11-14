@@ -221,7 +221,7 @@ function enviarPedido() {
         if (result.isConfirmed) {
             const ordenes = document.getElementsByClassName('ordenes');
             let ordenesAEnviar = [];
-            for (i = 0; i <= ordenes.length; i += 1) {
+            for (let i = 0; i <= ordenes.length; i += 1) {
                 if (ordenes[i] === undefined) {
                     continue;
                 } else {
