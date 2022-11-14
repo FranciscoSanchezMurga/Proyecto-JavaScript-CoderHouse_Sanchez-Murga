@@ -11,6 +11,7 @@ let seccionProductos = document.getElementById('seccionProductos');
 let btnOcultarProductos;
 let botonesEliminar;
 let numeroOrden = 0;
+const btnEnviarPedido = document.getElementById('btnEnviarPedido');
 
 async function crearDropdownListProductos() {
     const respuesta = await fetch('./data/productos.json');
@@ -133,7 +134,7 @@ function implementarFuncionalidadEliminarOrden() {
 function sumarOrdenAlCarrito() {
     const ordenNueva = JSON.parse(localStorage.getItem(numeroOrden));
     listaOrdenes.innerHTML += `
-    <li id="${numeroOrden}" class="ordenes list-group-item">
+    <li class="ordenes list-group-item">
         <div class="row text-center d-flex justify-content-between align-items-center">
             <div class="col-1">${ordenNueva.numeroOrden}</div>
             <div class="col-2">${ordenNueva.nombre}</div>
@@ -165,15 +166,15 @@ function calcularTotal() {
 function enviarPedido() {
     const ordenes = document.getElementsByClassName('ordenes');
     let ordenesAEnviar = [];
-    for( i=0 ; i <= ordenes.length ; i += 1) {
-        if ( ordenes[i] === undefined) {
+    for (i = 0; i <= ordenes.length; i += 1) {
+        if (ordenes[i] === undefined) {
             continue;
         } else {
             ordenesAEnviar.push(ordenes[i].getAttribute('id'));
         };
     };
     let preJson = [];
-    ordenesAEnviar.forEach( (ordenAEnviar) => {
+    ordenesAEnviar.forEach((ordenAEnviar) => {
         preJson.push(JSON.parse(localStorage.getItem(ordenAEnviar)));
     });
     let jsonAEnviar = JSON.stringify(preJson);
@@ -181,19 +182,29 @@ function enviarPedido() {
         method: 'POST',
         body: jsonAEnviar,
         headers: {
-            'Content-type' : 'application/json ; charset=UTF-8',
+            'Content-type': 'application/json ; charset=UTF-8',
         }
     })
-        .then( respuesta => {
-            console.log(respuesta);
-            return respuesta.json();
-        })
-        .then( apiPOST => console.log(apiPOST))
+        // .then(respuesta => {
+        //     return respuesta.json();
+        // })
+        // .then(apiPOST => console.log(apiPOST))
         .catch(error => console.log("Error en el envío de datos: " + error));
-
 };
 
+function limpiarCarrito() {
+    const ordenesFinales = document.getElementsByClassName('ordenes');
+    for(let i=0; i < ordenesFinales.length; i ++ ) {
+        console.log(ordenesFinales[i]);
+        ordenesFinales[i].remove();
+    };
+};
 
+btnEnviarPedido.addEventListener("click", ()=> {
+    enviarPedido();
+    limpiarCarrito();
+    mostrarOcultarCarrito();
+});
 
 btnSumarAlCarrito.addEventListener('click', function (evt) {
     evt.preventDefault();
