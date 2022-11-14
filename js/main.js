@@ -5,7 +5,7 @@ const btnSumarAlCarrito = document.getElementById('btnSumarAlCarrito');
 const listaOrdenes = document.getElementById('listaOrdenes');
 const selectorProductoYCantidad = document.querySelector("#selectorProductoYCantidad");
 const totalesParcialesEnCarrito = document.getElementsByClassName("classTotalesParciales");
-const totalAPagar = document.getElementById('totalAPagar');
+const totalAPagar = document.querySelector('#totalAPagar');
 let btnMostrarProductos = document.getElementById('btnMostrarProductos');
 let seccionProductos = document.getElementById('seccionProductos');
 let btnOcultarProductos;
@@ -21,8 +21,8 @@ async function crearDropdownListProductos() {
     };
 };
 
-function traerProductosDeBD_guardarlosEnLocalStorage() {
-    fetch("./data/productos.json")
+async function traerProductosDeBD_guardarlosEnLocalStorage() {
+   await fetch("./data/productos.json")
         .then(respuesta => respuesta.json())
         .then(productos => {
             const productosJSON = JSON.stringify(productos);
@@ -125,6 +125,7 @@ function implementarFuncionalidadEliminarOrden() {
     for (let i = 0; i < botonesEliminar.length; i += 1) {
         botonesEliminar[i].addEventListener('click', (evt) => {
             evt.preventDefault();
+            console.log(evt.target.parentElement.parentElement)
             evt.target.parentElement.parentElement.remove();
             mostrarOcultarCarrito();
         });
@@ -194,10 +195,14 @@ function enviarPedido() {
 
 function limpiarCarrito() {
     const ordenesFinales = document.getElementsByClassName('ordenes');
-    for(let i=0; i < ordenesFinales.length; i ++ ) {
-        console.log(ordenesFinales[i]);
-        ordenesFinales[i].remove();
-    };
+    // console.log(ordenesFinales);
+    const list = document.getElementById("listaOrdenes");
+    console.log(list.children.length)
+
+    while (list.hasChildNodes() && list.children.length >1) {
+        list.removeChild(list.lastChild);
+      }
+      mostrarOcultarCarrito();
 };
 
 btnEnviarPedido.addEventListener("click", ()=> {
