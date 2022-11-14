@@ -252,10 +252,10 @@ btnSumarAlCarrito.addEventListener('click', function (evt) {
     selectorProductoYCantidad.reset();
 });
 
-dropdownList.addEventListener('change', calcularTotalParcial);
-
-inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
-
+// dropdownList.addEventListener('change', calcularTotalParcial);
+dropdownList.addEventListener('input', calcularTotalParcial);
+// inputCantidadSeleccionada.addEventListener('change', calcularTotalParcial);
+inputCantidadSeleccionada.addEventListener('input', calcularTotalParcial);
 crearDropdownListProductos();
 traerProductosDeBD_guardarlosEnLocalStorage();
 

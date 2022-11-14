@@ -3,18 +3,84 @@
         "id": 1,
         "nombre": "Sándwich de milanesa",
         "precio": 500,
-        "imagen": "https://lh3.googleusercontent.com/lcn0osAXTRZedXLFntYvZFjHCXlKjVjt5fv-JAzRHt-dOubZ3oRhrbnxBcuDwboHMkT_MjqZTXzDdYqqVYs6pPpGq1aHxGamLCATNbCzqEmP34MHgdegnuxFD-7s3ktRLmp6HC5_Mg=w2400"
+        "imagen": "https://lh3.googleusercontent.com/lcn0osAXTRZedXLFntYvZFjHCXlKjVjt5fv-JAzRHt-dOubZ3oRhrbnxBcuDwboHMkT_MjqZTXzDdYqqVYs6pPpGq1aHxGamLCATNbCzqEmP34MHgdegnuxFD-7s3ktRLmp6HC5_Mg=w2400",
+        "categoria": "Sándwichs"
     },
-    {
+        {
         "id": 2,
-        "nombre": "Sándwich de lomito",
+        "nombre": "Sándwich de milanesa especial",
         "precio": 600,
-        "imagen": "https://lh3.googleusercontent.com/hAClHNkCCYYkElrvYuWFo2A8nSpgC49jesphUrELgan92tjqb5EKyO_iX0-hiBqEDfA3l4LHqCsK4Ukk_Rb6llFibrkELTaiVYMGiGQuE39-PpZ-Ve1yH1kewEYHwy-iwFLL_jq-Wg=w2400"
+        "imagen": "https://lh3.googleusercontent.com/JnThqof4n0aqQnVasphwp0UCC2boQy7pnCp-EIGMpFmqhSaaD3l9ov_y3ZTl14QrRhRuX2gG0xRac_C0XIcBQPFHhgW8UIvQtm4Fh_Wb0vjcnkl6sTjypgy9kLQ3jAFAklDxaaoACg=w2400",
+        "categoria": "Sándwichs"
     },
     {
         "id": 3,
+        "nombre": "Sándwich de lomito",
+        "precio": 600,
+        "imagen": "https://lh3.googleusercontent.com/hAClHNkCCYYkElrvYuWFo2A8nSpgC49jesphUrELgan92tjqb5EKyO_iX0-hiBqEDfA3l4LHqCsK4Ukk_Rb6llFibrkELTaiVYMGiGQuE39-PpZ-Ve1yH1kewEYHwy-iwFLL_jq-Wg=w2400",
+        "categoria": "Sándwichs"
+    },
+    {
+        "id": 4,
+        "nombre": "Sándwich de lomito especial",
+        "precio": 600,
+        "imagen": "https://lh3.googleusercontent.com/WxleHdUkznobDjjnrgl5erC8CclqreFOA_gdA6-R0WRW2KGsbIUhv_pgqxCBOktdygEVFlO_bAE2y_HySVZ8GgjAEA4HbZRyOnivPPA49167VV73dchnP8hOyJlvin8ubm0rJ4vn-A=w2400",
+        "categoria": "Sándwichs"
+    },
+    {
+        "id": 5,
+        "nombre": "Moli-Tremendo",
+        "precio": 400,
+        "imagen": "https://lh3.googleusercontent.com/FwE-YycpZu3xG0IZvX5YVg0kbEbgJt_H9PSO4jr4hYDqpFub81-wjepSsyuektobD6IAmVuAHF8KvLF7liUdhQ231UXlO-rVWmA8HNhqjfpXlty8_naXVyzzS6ddWNzPjR5Y49rvDg=w2400",
+        "categoria": "Sándwichs"
+    },
+    {
+        "id": 6,
+        "nombre": "Mila-Tremendo",
+        "precio": 800,
+        "imagen": "https://lh3.googleusercontent.com/3mKlOd0-iT3TS7gpEJ1sJIKfHhechC8_g5PCb685gaaRVfp6JOgOjWE2WzXxN4bmiTqvEQ47KgiUjn81eCta9S4Lp9QMznmHTsV1RWXtNPSBbzSl8OR5E5CBQK7X-ivNVWzWroBJzA=w2400",
+        "categoria": "Sándwichs"
+    },
+    {
+        "id": 7,
+        "nombre": "Papas fritas ",
+        "precio": 300,
+        "imagen": "https://lh3.googleusercontent.com/5-yqhMu5nCSfEc7OBkhUGwjZWJIEKrhgAG1rT005icY6QT32NDTiIfHZAZ-1lLfo7GW6Jqoe-0FGpXivu20j7SPtHY6Q3wqzKE0cbRq4q5ZFKZxrZ9PEROd1yvD86-iwHj5QuRZF3Q=w2400",
+        "categoria": "Papas Fritas"
+    },
+    {
+        "id": 8,
+        "nombre": "Papas fritas gratinadas ",
+        "precio": 400,
+        "imagen": "https://lh3.googleusercontent.com/TbGzYPiMLIOjVMjeryEN5vsEiQcARZVr1E28YUr7ittDwCruwTKrzJvGgqpXP1BFymf65iu8lPooczsRu1uIJj9v6AIi2oP_82RfSR3gDZqGWM9Homkx9nTKVI7t7oAOENgkTc_ggA=w2400",
+        "categoria": "Papas Fritas"
+    },
+    {
+        "id": 9,
+        "nombre": "Milanesa al plato con fritas",
+        "precio": 800,
+        "imagen": "https://th.bing.com/th/id/R.79f2ca2279e5fd95175e1a011ec1b57a?rik=PVqITC0cKf%2fCKw&pid=ImgRaw&r=0",
+        "categoria": "Milanesas al plato"
+    },
+    {
+        "id": 10,
+        "nombre": "Napolitana al plato con fritas",
+        "precio": 900,
+        "imagen": "https://lh3.googleusercontent.com/wVegLiD69qZtVxNu6VjMOSt16X-wlVVPAXPqMF63DDRf3txQzqc51mFXDuWjvGpL5MXlXwD8oZcK_j1mWIQXz1Kw_5yoJ0rZgE1DZOH8W6psIcmf0ck2X2OwAKTpmkjHJXUWtvTG8Q=w2400",
+        "categoria": "Milanesas al plato"
+    },
+    {
+        "id": 11,
         "nombre": "Pizza especial",
+        "precio": 1100,
+        "imagen": "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400",
+        "categoria": "Pizzas"
+    },
+    {
+        "id": 12,
+        "nombre": "Pizza común",
         "precio": 1000,
-        "imagen": "https://lh3.googleusercontent.com/a2_GdGDxCpkHe6YeKlf03qDx_RqzjCGi7P8fWeERDXsifnIQFOxVRiJEbK2JEXXDJbmWYsvxPQa7owK_1ZyMfVFlJfvAPJGvDtPbVxt6eT2FclC5VYcOK61bQmLZax6W4QB65vgmfQ=w2400"
+        "imagen": "https://lh3.googleusercontent.com/E0-IRub-R3DRIRFIzhFCF5RfLkFJchRbS20_TX8wjCUtUWMQkRibTlDDqS4PR8RGyDq9uBlojgqNbV4EFW4zMIrPRbRQJ5nVy1OA4e2HhjpziaFAV0tCFcKCg2Pf_88S7earHa0aAw=w2400",
+        "categoria": "Pizzas"
     }
 ]
