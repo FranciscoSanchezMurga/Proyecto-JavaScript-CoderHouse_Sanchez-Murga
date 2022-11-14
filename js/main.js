@@ -195,9 +195,7 @@ function enviarPedido() {
 
 function limpiarCarrito() {
     const ordenesFinales = document.getElementsByClassName('ordenes');
-    // console.log(ordenesFinales);
     const list = document.getElementById("listaOrdenes");
-    console.log(list.children.length)
 
     while (list.hasChildNodes() && list.children.length >1) {
         list.removeChild(list.lastChild);
