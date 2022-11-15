@@ -25,19 +25,29 @@
 
         <div class="containerSelectores">
 
-            <h3>Introduzca su orden aquí</h3>
+            <h4><span class="badge bg-dark">Seleccione lo que desea</span></h4> 
 
-            <form id="selectorProductoYCantidad" class="input-group">
-                <label class="input-group-text" for="dropdownList">Producto</label>
-                <select id="dropdownList" type="text" class="form-select">
-                    <option value="0" hidden></option>
-                </select>
-                <label class="input-group-text" for="inputCantidadSeleccionada">Cantidad</label>
-                <input id="inputCantidadSeleccionada" type="number" class="form-control" min="0">
-                <span class="input-group-text">Total parcial</span>
-                <input id="totalParcial" type="text" readonly>
-                <button id="btnSumarAlCarrito" type="submit" class="btn btn-outline-dark" type="button">SUMAR AL
+            <form id="selectorProductoYCantidad" class="d-flex flex-column align-items-center">
+                <div class="input-group d-flex flex-column align-items-center">
+                    <div class="input-group w-50">
+                        <label class="input-group-text w-50" for="dropdownList">Producto</label>
+                        <select id="dropdownList" type="text" class="w-50 form-select">
+                            <option value="0" hidden></option>
+                        </select>
+                    </div>
+                    <div class="input-group w-50">
+                        <label class="input-group-text w-50" for="inputCantidadSeleccionada">Cantidad</label>
+                        <input id="inputCantidadSeleccionada" type="number" class="w-50 form-control" min="0">
+                    </div>
+                    <div class="input-group w-50">
+                        <label class="input-group-text w-50" for="totalParcial">Total parcial</label>
+                        <input id="totalParcial" type="text" class="w-50 form-control" readonly>
+                    </div>
+                </div>
+                <button id="btnSumarAlCarrito" type="submit" class="btn btn-outline-dark w-50" type="button">SUMAR AL
                     CARRITO</button>
+
+
             </form>
 
         </div>

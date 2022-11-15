@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0.05rem;
+    /* background-color: whitesmoke; */
 }
 
 .gridConProductos {
@@ -17,8 +18,6 @@
         "containerCarrito containerProductos";
     width: 100vw;
     height: 100vh;
-    /* max-width: 100vw;
-    max-height: 100vw; */
 }
 
 .gridSinProductos {
@@ -44,7 +43,10 @@ header {
 
 .containerSelectores {
     grid-area: containerSelectores;
-    /* display: flex; */
+    text-align: center;
+    border: 0.1rem dotted;
+    padding: 1rem;
+    border-radius: 2rem;
 }
 
 .containerCarrito {
@@ -61,6 +63,7 @@ header {
     border-left-style: solid;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: 1rem;
 }
 
 #totalYBtnEnviar{

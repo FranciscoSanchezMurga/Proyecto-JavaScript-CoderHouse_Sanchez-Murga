@@ -43,7 +43,7 @@ function MostrarProductos() {
     containerProductos.style.justifyContent='space-between';
     containerProductos.innerHTML = `
     <button id="btnOcultarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ocultar productos</button>
-    <div id="containerCardsDeProductos" class="row row-cols-3 g-3"></div>
+    <div id="containerCardsDeProductos" class="row row-cols-3 g-3 m-1"></div>
     `;
     const productos = extraerProductosDeLocalStorage();
     for (const producto of productos) {
