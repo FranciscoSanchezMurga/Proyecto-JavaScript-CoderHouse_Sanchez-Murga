@@ -7,7 +7,7 @@ const selectorProductoYCantidad = document.querySelector("#selectorProductoYCant
 const totalesParcialesEnCarrito = document.getElementsByClassName("classTotalesParciales");
 const totalAPagar = document.querySelector('#totalAPagar');
 let btnMostrarProductos = document.getElementById('btnMostrarProductos');
-let seccionProductos = document.getElementById('seccionProductos');
+let containerProductos = document.getElementById('containerProductos');
 let btnOcultarProductos;
 let botonesEliminar;
 let numeroOrden = 0;
@@ -37,7 +37,11 @@ function extraerProductosDeLocalStorage() {
 
 
 function MostrarProductos() {
-    seccionProductos.innerHTML = `
+    const containerGeneral = document.querySelector('.gridSinProductos');
+    containerGeneral.classList.add('gridConProductos');
+    containerGeneral.classList.remove('gridSinProductos');
+    containerProductos.style.justifyContent='space-between';
+    containerProductos.innerHTML = `
     <button id="btnOcultarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ocultar productos</button>
     <div id="containerCardsDeProductos" class="row row-cols-3 g-3"></div>
     `;
@@ -63,7 +67,11 @@ function MostrarProductos() {
 btnMostrarProductos.addEventListener("click", MostrarProductos);
 
 function OcultarProductos() {
-    seccionProductos.innerHTML = `<button id="btnMostrarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ver productos</button>`;
+    const containerGeneral = document.querySelector('.gridConProductos');
+    containerGeneral.classList.add('gridSinProductos');
+    containerGeneral.classList.remove('gridConProductos');
+    containerProductos.innerHTML = `<button id="btnMostrarProductos" class="btn btn-dark" type="button">Ver productos</button>`;
+    containerProductos.style.justifyContent='center';
     btnMostrarProductos = document.getElementById('btnMostrarProductos');
     btnMostrarProductos.addEventListener("click", MostrarProductos);
 };
@@ -114,10 +122,10 @@ function guardarOrdenEnLocalStorage(valorNoValido) {
 };
 
 function mostrarOcultarCarrito() {
-    const seccionCarrito = document.getElementById('seccionCarrito');
+    const containerCarrito = document.getElementById('containerCarrito');
     if (listaOrdenes.childElementCount > 1) {
-        seccionCarrito.removeAttribute('hidden')
-    } else { seccionCarrito.setAttribute('hidden', '') }
+        containerCarrito.removeAttribute('hidden')
+    } else { containerCarrito.setAttribute('hidden', '') }
 };
 
 function implementarFuncionalidadEliminarOrden() {
@@ -156,38 +164,25 @@ function sumarOrdenAlCarrito(valorNoValido) {
         mostrarOcultarCarrito();
         implementarFuncionalidadEliminarOrden();
     } else {
-        Toastify({
-            text: "Complete los campos faltantes",
-            duration: 2500,
-            destination: "https://github.com/apvarun/toastify-js",
-            newWindow: true,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: false, // Prevents dismissing of toast on hover
-            style: {
-                background: "#ca4545" ,
-                color: "white",
-            },
-        }).showToast();
+        mensajeDeErrorToastify();
     };
 };
 
 
-function mensajeDeError() {
+function mensajeDeErrorToastify() {
     Toastify({
-        text: "ERROR",
-        duration: 2000,
+        text: "Complete los campos faltantes",
+        duration: 2500,
         destination: "https://github.com/apvarun/toastify-js",
         newWindow: true,
         close: true,
         gravity: "top", // `top` or `bottom`
-        position: "left", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: false, // Prevents dismissing of toast on hover
         style: {
-            background: "linear-gradient(to right, #00b09b, #96c93d)",
+            background: "#ca4545" ,
+            color: "white",
         },
-        onClick: function () { } // Callback after click
     }).showToast();
 };
 

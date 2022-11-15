@@ -9,19 +9,21 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- CSS Toastify -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- styles.css -->
+    <link rel="stylesheet" href="./css/styles.css">
     <title>Simulador interactivo</title>
 </head>
 
 <body>
+    <div class="gridSinProductos">
 
-    <header>
-        <h1>Simulador carrito de compras</h1>
-    </header>
-    <main class="container-fluid">
+        <header>
+            <h1>Comida rápida online</h1>
+        </header>
 
         <!-- SELECTOR PRODUCTO Y CANTIDADES -->
 
-        <section>
+        <div class="containerSelectores">
 
             <h3>Introduzca su orden aquí</h3>
 
@@ -38,11 +40,22 @@
                     CARRITO</button>
             </form>
 
-        </section>
+        </div>
 
         <!-- CARRITO -->
 
-        <section id="seccionCarrito" hidden>
+
+        <div id="containerCarrito" class="containerCarrito" hidden>
+
+                <div id="totalYBtnEnviar">
+                    <div class="input-group">
+                        <div class="text-center input-group-text fw-bold">Total acumulado</div>
+                        <input readonly id="totalAPagar" type="text" class="text-center form-control"
+                            aria-describedby="btnEnviarPedido">
+                        <button class="text-center btn btn-success" type="button" id="btnEnviarPedido">Confirmar
+                            pedido</button>
+                    </div>
+                </div>
 
             <ul id="listaOrdenes" class="list-group">
                 <!-- Headers de la lista de items -->
@@ -61,23 +74,17 @@
                 <!-- Items de la lista -->
             </ul>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">A PAGAR</span>
-                <input readonly id="totalAPagar" type="text" class="form-control" aria-describedby="btnEnviarPedido">
-                <button class="btn btn-success" type="button" id="btnEnviarPedido">Confirmar pedido</button>
-            </div>
-
-        </section>
+        </div>
 
         <!-- LISTADO DE PRODUCTOS -->
 
-        <section id="seccionProductos" class="">
+        <div id="containerProductos" class="containerProductos w-auto">
 
-            <button id="btnMostrarProductos" class="btn btn-dark d-grid gap-2 col-6 mx-auto" type="button">Ver productos</button>
+            <button id="btnMostrarProductos" class="btn btn-dark w-auto" type="button">Ver productos</button>
 
-        </section>
+        </div>
 
-    </main>
+    </div>
 
     <!-- Toastify -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

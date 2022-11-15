@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0.05rem;
+}
+
+.gridConProductos {
+    display: grid;
+    grid-template-columns: 1.4fr 1.8fr;
+    grid-template-rows: 0.4fr 0.4fr 2.9fr;
+    grid-auto-columns: 1fr;
+    gap: 0.5em .5em;
+    grid-auto-flow: row;
+    justify-items: stretch;
+    grid-template-areas:
+        "header header"
+        "containerSelectores containerProductos"
+        "containerCarrito containerProductos";
+    width: 100vw;
+    height: 100vh;
+    /* max-width: 100vw;
+    max-height: 100vw; */
+}
+
+.gridSinProductos {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 2.7fr 0.5fr;
+    grid-template-rows: 0.4fr 0.4fr 2.9fr;
+    gap: 0.5em .5em;
+    grid-template-areas:
+        "header header"
+        "containerSelectores containerProductos"
+        "containerCarrito containerProductos";
+    justify-items: stretch;
+    width: 100vw;
+    height: 100vh;
+    /* max-width: 100vw;
+    max-height: 100vw; */
+}
+
+header {
+    grid-area: header;
+}
+
+.containerSelectores {
+    grid-area: containerSelectores;
+    /* display: flex; */
+}
+
+.containerCarrito {
+    grid-area: containerCarrito;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerProductos {
+    grid-area: containerProductos;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#totalYBtnEnviar{
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+} 
+
+ #totalYBtnEnviar div {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+} 
+
+
+#totalYBtnEnviar div div,input,button {
+    width: 33%;
+} 
+
+
+
+
+
+
+
