@@ -136,6 +136,7 @@ function implementarFuncionalidadEliminarOrden() {
             console.log(evt.target.parentElement.parentElement)
             evt.target.parentElement.parentElement.remove();
             mostrarOcultarCarrito();
+            calcularTotal();
         });
     };
 };
