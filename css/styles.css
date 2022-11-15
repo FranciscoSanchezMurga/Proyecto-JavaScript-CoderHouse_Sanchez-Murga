@@ -58,6 +58,9 @@ header {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    border-left-style: solid;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #totalYBtnEnviar{
@@ -76,6 +79,9 @@ header {
 #totalYBtnEnviar div div,input,button {
     width: 33%;
 } 
+
+
+
 
 
 

@@ -70,7 +70,7 @@ function OcultarProductos() {
     const containerGeneral = document.querySelector('.gridConProductos');
     containerGeneral.classList.add('gridSinProductos');
     containerGeneral.classList.remove('gridConProductos');
-    containerProductos.innerHTML = `<button id="btnMostrarProductos" class="btn btn-dark" type="button">Ver productos</button>`;
+    containerProductos.innerHTML = `<button id="btnMostrarProductos" class="btn btn-dark w-auto" type="button">Ver productos</button>`;
     containerProductos.style.justifyContent='center';
     btnMostrarProductos = document.getElementById('btnMostrarProductos');
     btnMostrarProductos.addEventListener("click", MostrarProductos);
